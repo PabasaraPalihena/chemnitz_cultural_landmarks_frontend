@@ -1,0 +1,97 @@
+.navbar {
+    background-color: #F9F9F9;
+    display: flex;
+  }
+  
+  .navbar .toolbar {
+    padding: 15px 15px;
+  }
+  
+  .navbar .menu-icon {
+    color: rgb(60, 60, 60);
+  }
+  
+  .navbar .title {
+    margin-top: 23px;
+    font-size: 26px;
+    font-weight: 800;
+    color: rgb(60, 60, 60);
+  }
+  
+  .navbar .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .navbar .buttons button {
+    width: 100px;
+    color: rgb(60, 60, 60);
+  }
+  
+  .navbar__link {
+    text-decoration: none !important;
+  }
+  .navbar__text {
+    text-decoration: none;
+  }
+  .header__links {
+    display: flex;
+    margin-left: 60px;
+  }
+  .header__Rightlinks {
+    display: flex;
+    margin-left: auto;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .header__Rightlinks {
+      margin-left: 0;
+      margin-right: 10px;
+    }
+  }
+  @media (max-width: 600px) {
+    .header__Rightlinks {
+      margin-left: 180px;
+      margin-right: 10px;
+    }
+  }
+  @media (max-width: 550px) {
+    .header__Rightlinks {
+      margin-left: 150px;
+      margin-right: 10px;
+    }
+  }
+  @media (max-width: 500px) {
+    .header__Rightlinks {
+      margin-left: 100px;
+      margin-right: 10px;
+    }
+  }
+  @media (max-width: 450px) {
+    .header__Rightlinks {
+      margin-left: 80px;
+      margin-right: 10px;
+    }
+  }
+  @media (max-width: 400px) {
+    .header__Rightlinks {
+      margin-left: 50px;
+      margin-right: 10px;
+    }
+  }
+  @media (max-width: 350px) {
+    .header__Rightlinks {
+      margin-left: 20px;
+      margin-right: 10px;
+    }
+  }
+  @media (max-width: 340px) {
+    .header__Rightlinks {
+      margin-left: auto;
+      margin-right: 10px;
+    }
+  }
+  .list-item:hover {
+    background-color: #f0f0f0;
+  }
