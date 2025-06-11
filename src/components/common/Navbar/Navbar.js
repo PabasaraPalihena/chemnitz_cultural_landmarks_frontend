@@ -22,7 +22,7 @@ export default function Navbar({ setIsLoggedIn }) {
   const [title, setTitle] = useState("");
 
   useEffect(() => {
-    setTitle(isMobile ? "SLHome" : "SriLankaHome");
+    setTitle(isMobile ? "Chemnitz" : "Explore Chemnitz");
   }, [isMobile]);
 
   const toggleDrawer = (open) => (event) => {
@@ -43,18 +43,13 @@ export default function Navbar({ setIsLoggedIn }) {
     >
       <List>
         <ListItem className="list-item">
-          <Link to="/search" className="navbar__link">
-            <ListItemText secondary="Buy" />
+          <Link to="/locations" className="navbar__link">
+            <ListItemText secondary="Locations" />
           </Link>
         </ListItem>
         <ListItem className="list-item">
-          <Link to="/sell" className="navbar__link">
-            <ListItemText secondary="Sell" />
-          </Link>
-        </ListItem>
-        <ListItem className="list-item">
-          <Link to="/findagent/" className="navbar__link">
-            <ListItemText secondary="Find Agent" />
+          <Link to="/about" className="navbar__link">
+            <ListItemText secondary="About Chemnitz" />
           </Link>
         </ListItem>
       </List>
@@ -89,31 +84,22 @@ export default function Navbar({ setIsLoggedIn }) {
           </Link>
           {!isMobile && (
             <div className="header__links">
-              <Link to="/search">
+              <Link to="/location">
                 <Button
                   variant="text"
                   className="header__links"
-                  style={{ width: "75px" }}
+                  style={{ width: "100px" }}
                 >
-                  Buy
+                  Locations
                 </Button>
               </Link>
-              <Link to="/sell">
+              <Link to="/about">
                 <Button
                   variant="text"
                   className="header__links"
-                  style={{ width: "75px" }}
+                  style={{ width: "200px" }}
                 >
-                  Sell
-                </Button>
-              </Link>
-              <Link to="/findagent/">
-                <Button
-                  variant="text"
-                  className="header__links"
-                  style={{ width: "110px" }}
-                >
-                  Find Agent
+                  About Chemnitz
                 </Button>
               </Link>
             </div>
@@ -127,7 +113,11 @@ export default function Navbar({ setIsLoggedIn }) {
         anchor="left"
         open={drawerOpen}
         onClose={toggleDrawer(false)}
-        PaperProps={{ sx: { width: "120px" } }}
+        slotProps={{
+          paper: {
+            sx: { width: "120px" },
+          },
+        }}
       >
         <div>
           <IconButton
