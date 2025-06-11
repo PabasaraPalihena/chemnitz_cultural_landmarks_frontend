@@ -1,0 +1,49 @@
+.navbar {
+    background-color: #F9F9F9;
+    display: flex;
+  }
+  .navbar .menu-icon {
+    color: rgb(60, 60, 60);
+  }
+  
+  .navbar .title {
+    margin-left: 10px;
+    font-size: 26px;
+    font-weight: 800;
+    color: rgb(60, 60, 60);
+  }  
+  .navbar__link {
+    text-decoration: none !important;
+  }
+  .navbar__text {
+    text-decoration: none;
+  }
+  .header__links {
+    display: flex;
+    margin-left: 60px;
+  }
+  .header__Rightlinks {
+    display: flex;
+    margin-left: auto;
+  }
+ 
+.username__font {
+  font-weight: bold;
+  text-transform: capitalize;
+  color: rgb(60, 60, 60);
+}
+
+.email__font {
+  font-size: 12px;
+  text-transform: lowercase;
+  color: rgb(60, 60, 60);
+}
+.user__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.list-item:hover {
+    background-color: #f0f0f0;
+  }
