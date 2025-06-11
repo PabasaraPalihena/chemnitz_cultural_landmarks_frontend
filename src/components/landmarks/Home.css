@@ -1,0 +1,37 @@
+.center {
+    display: block;
+    margin-left: 0px;
+    margin-right: auto;
+    width: 100%;
+    background: "rgba(0, 0, 0, 0.5)",
+  }
+  .find-heading {
+    display: block;
+    margin-left: 20px;
+    margin-top: 100px;
+    margin-right: auto;
+    color: "#fff";
+    font-size: 3em;
+  }
+.home__headers{
+  display: flex;
+  justify-content: center;
+  font-size: 1.7em;
+}
+@media (max-width: 600px) {
+  .find-heading {
+    font-size: 2em;
+  }
+  .home__headers{
+    font-size: 1.5em;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .find-heading {
+    font-size: 2.5em;
+  }
+  .home__headers{
+    font-size: 1.5em;
+  }
+}
