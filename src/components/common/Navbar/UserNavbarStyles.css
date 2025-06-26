@@ -22,6 +22,9 @@
     display: flex;
     margin-left: 60px;
   }
+  .header__links > a {
+  margin-right: 20px;
+}
   .header__Rightlinks {
     display: flex;
     margin-left: auto;

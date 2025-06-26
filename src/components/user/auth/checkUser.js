@@ -1,11 +1,11 @@
-import jwt from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import Axios from "axios";
 const API = process.env.REACT_APP_API;
 
 const checkUser = async () => {
   const token = localStorage.getItem("token");
   if (token) {
-    const user = jwt(token);
+    const user = jwtDecode(token);
     if (user.id) {
       try {
         // console.log(user.id)

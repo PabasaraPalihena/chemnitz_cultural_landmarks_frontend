@@ -51,11 +51,9 @@ function stringAvatar(username) {
 export default function UserNavbar({ setIsLoggedIn, userInfo }) {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [profileOpen, setProfileOpen] = useState(false);
   const username = userInfo.firstName + " " + userInfo.lastName;
   const userEmail = userInfo.email;
   const uId = userInfo._id;
-  const role = userInfo.role;
   const [drawerOpen, setDrawerOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width:600px)");
   const [title, setTitle] = useState("");
@@ -65,7 +63,6 @@ export default function UserNavbar({ setIsLoggedIn, userInfo }) {
   }, [isMobile]);
 
   const toggleDrawer = (open) => (event) => {
-    // console.log(open)
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -83,7 +80,7 @@ export default function UserNavbar({ setIsLoggedIn, userInfo }) {
     >
       <List>
         <ListItem className="list-item">
-          <Link to="/locations" className="navbar__link">
+          <Link to="/search" className="navbar__link">
             <ListItemText secondary="Locations" />
           </Link>
         </ListItem>
@@ -114,16 +111,6 @@ export default function UserNavbar({ setIsLoggedIn, userInfo }) {
     setIsLoggedIn(false);
     setAnchorEl(null);
     navigate("/");
-  };
-
-  const handleMenuPostings = () => {
-    navigate("/mypostings");
-    setAnchorEl(null);
-  };
-
-  const handleSavedSearches = () => {
-    navigate("/savedsearches");
-    setAnchorEl(null);
   };
 
   const accountSettings = () => {
@@ -164,7 +151,7 @@ export default function UserNavbar({ setIsLoggedIn, userInfo }) {
             </Link>
             {!isMobile && (
               <div className="header__links">
-                <Link to="/locations">
+                <Link to="/search">
                   <Button
                     variant="text"
                     className="header__links"
@@ -177,7 +164,7 @@ export default function UserNavbar({ setIsLoggedIn, userInfo }) {
                   <Button
                     variant="text"
                     className="header__links"
-                    style={{ width: "75px" }}
+                    style={{ width: "155px" }}
                   >
                     About Chemnitz
                   </Button>
@@ -214,10 +201,6 @@ export default function UserNavbar({ setIsLoggedIn, userInfo }) {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleSavedSearches}>
-                  Saved Searches
-                </MenuItem>
-                <MenuItem onClick={handleMenuPostings}>My Properties</MenuItem>
                 <MenuItem onClick={accountSettings}>Account Settings</MenuItem>
                 <Divider />
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
@@ -229,7 +212,11 @@ export default function UserNavbar({ setIsLoggedIn, userInfo }) {
           anchor="left"
           open={drawerOpen}
           onClose={toggleDrawer(false)}
-          PaperProps={{ sx: { width: "120px", zIndex: 9999 } }}
+          slotProps={{
+            paper: {
+              sx: { width: "120px" },
+            },
+          }}
         >
           <div>
             <IconButton

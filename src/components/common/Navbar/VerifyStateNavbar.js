@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { AppBar, Toolbar } from "@mui/material";
 import Model from "../../user/Model";

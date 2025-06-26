@@ -43,7 +43,7 @@ export default function Navbar({ setIsLoggedIn }) {
     >
       <List>
         <ListItem className="list-item">
-          <Link to="/locations" className="navbar__link">
+          <Link to="/search" className="navbar__link">
             <ListItemText secondary="Locations" />
           </Link>
         </ListItem>
@@ -84,7 +84,7 @@ export default function Navbar({ setIsLoggedIn }) {
           </Link>
           {!isMobile && (
             <div className="header__links">
-              <Link to="/location">
+              <Link to="/search">
                 <Button
                   variant="text"
                   className="header__links"

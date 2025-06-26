@@ -1,0 +1,46 @@
+  .SR_Estate_component {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    margin-top: 0px;
+    padding-left: 10px;
+    /* margin: auto; */
+  }
+  .SR_Card_wrapper {
+    margin: 5px;
+  }
+  .SR_Card__text {
+    text-decoration: none;
+  }
+  .pagination__container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: auto;
+  }
+  .img__message{
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+  }
+  .search-results-container {
+    max-height: calc(100vh - 160px);
+    overflow-y: scroll;
+  }
+  
+  @media screen and (max-width: 800px) {
+    .search-results-container {
+      max-height: calc(100vh - 250px);
+      overflow-y: scroll;
+    }
+  }
+
+  @media screen and (max-width: 1100px) {
+    .SR_Estate_component {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  
+  
