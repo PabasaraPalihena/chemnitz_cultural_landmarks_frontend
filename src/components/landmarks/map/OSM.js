@@ -11,6 +11,14 @@ import "leaflet/dist/leaflet.css";
 import { useNavigate } from "react-router-dom";
 import "./OSM.css";
 
+import resturantIcon from "../../images/spoon-and-fork.png";
+import hotelIcon from "../../images/sleeping.png";
+import museumIcon from "../../images/museum.png";
+import artworkIcon from "../../images/sculpture.png";
+import galleryIcon from "../../images/painting.png";
+import theatreIcon from "../../images/theater.png";
+import defaultIcon from "../../images/default.png";
+
 const OSM = ({ locationCoordinates, landmarks, onMapChange }) => {
   const navigate = useNavigate();
   const mapRef = useRef(null);
@@ -47,15 +55,82 @@ const OSM = ({ locationCoordinates, landmarks, onMapChange }) => {
     navigate(`/homeinfor/${landmark._id}`, { state: { landmark } });
   };
 
-  const squareIcon = new L.divIcon({
-    className: "square-icon",
-    html: '<div class="square"></div>',
-  });
-
-  const blueSquareIcon = new L.divIcon({
-    className: "square-icon blue",
-    html: '<div class="square"></div>',
-  });
+  const getIconForType = (type) => {
+    switch (type) {
+      case "restaurant":
+        return L.divIcon({
+          className: "custom-icon restaurant-icon",
+          html: `<div class="icon-wrapper">
+             <img src="${resturantIcon}"/>
+           </div>`,
+          iconSize: [25, 25],
+          iconAnchor: [12, 25],
+          popupAnchor: [0, -25],
+        });
+      case "hotel":
+      case "guest_house":
+        return L.divIcon({
+          className: "custom-icon hotel-icon",
+          html: `<div class="icon-wrapper">
+             <img src="${hotelIcon}"/>
+           </div>`,
+          iconSize: [25, 25],
+          iconAnchor: [12, 25],
+          popupAnchor: [0, -25],
+        });
+      case "theatre":
+      case "theater":
+        return L.divIcon({
+          className: "custom-icon theater-icon",
+          html: `<div class="icon-wrapper">
+             <img src="${theatreIcon}"/>
+           </div>`,
+          iconSize: [25, 25],
+          iconAnchor: [15, 30],
+          popupAnchor: [0, -30],
+        });
+      case "museum":
+        return L.divIcon({
+          className: "custom-icon museum-icon",
+          html: `<div class="icon-wrapper">
+             <img src="${museumIcon}"/>
+           </div>`,
+          iconSize: [25, 25],
+          iconAnchor: [15, 30],
+          popupAnchor: [0, -30],
+        });
+      case "artwork":
+        return L.divIcon({
+          className: "custom-icon artwork-icon",
+          html: `<div class="icon-wrapper">
+             <img src="${artworkIcon}"/>
+           </div>`,
+          iconSize: [25, 25],
+          iconAnchor: [15, 30],
+          popupAnchor: [0, -30],
+        });
+      case "gallery":
+        return L.divIcon({
+          className: "custom-icon gallery-icon",
+          html: `<div class="icon-wrapper">
+             <img src="${galleryIcon}"/>
+           </div>`,
+          iconSize: [25, 25],
+          iconAnchor: [15, 30],
+          popupAnchor: [0, -30],
+        });
+      default:
+        return L.divIcon({
+          className: "custom-icon default-icon",
+          html: `<div class="icon-wrapper">
+             <img src="${defaultIcon}"/>
+           </div>`,
+          iconSize: [25, 25],
+          iconAnchor: [15, 30],
+          popupAnchor: [0, -30],
+        });
+    }
+  };
 
   // Set the zoom level conditionally based on locationCoordinates
   const zoomLevel =
@@ -97,37 +172,38 @@ const OSM = ({ locationCoordinates, landmarks, onMapChange }) => {
         </LayersControl.Overlay>
       </LayersControl>
 
-      {landmarks.map((landmark) => (
-        <Marker
-          key={landmark._id}
-          position={[
-            landmark.geometry.coordinates[1],
-            landmark.geometry.coordinates[0],
-          ]}
-          icon={squareIcon}
-          eventHandlers={{
-            mouseover: (e) => {
-              e.target.openPopup();
-              e.target.setIcon(blueSquareIcon);
-            },
-            mouseout: (e) => {
-              e.target.closePopup();
-              e.target.setIcon(squareIcon);
-            },
-          }}
-        >
-          <Popup closeButton={false}>
-            <div onClick={() => handlePopupClick(landmark)}>
-              testing
-              {/* <img
-                src={property.images[0]}
-                alt="Property"
-                style={{ width: "100%", height: "40px" }}
-              /> */}
-            </div>
-          </Popup>
-        </Marker>
-      ))}
+      {landmarks.map((landmark) => {
+        const type =
+          landmark.properties.tourism || landmark.properties.amenity || "other";
+        const customIcon = getIconForType(type);
+
+        return (
+          <Marker
+            key={landmark._id}
+            position={[
+              landmark.geometry.coordinates[1],
+              landmark.geometry.coordinates[0],
+            ]}
+            icon={customIcon}
+            eventHandlers={{
+              mouseover: (e) => {
+                e.target.openPopup();
+              },
+              mouseout: (e) => {
+                e.target.closePopup();
+              },
+            }}
+          >
+            <Popup closeButton={false}>
+              <div onClick={() => handlePopupClick(landmark)}>
+                <h4>{type}</h4>
+                <p>{landmark.properties.artwork_type}</p>
+                <p>{landmark.properties.name}</p>
+              </div>
+            </Popup>
+          </Marker>
+        );
+      })}
     </MapContainer>
   );
 };

@@ -1,33 +1,96 @@
-.square-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-}
-  
-.square {
-    background-color: red;
-    border-radius: 50%;
-    width: 40px;
-    height: 10px;
-    border: 1px solid blue !important;
-}
-.square-icon :hover {
-    background-color: #2196f3;
+.restaurant-icon .icon-wrapper {
+  background-color: red;
+  border-radius: 50%;
+  padding: 3px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid white; /* white frame */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
 }
 
-.circle-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    border-radius: 50%;
-    background-color: red;
-    width: 50px;
-    height: 50px;
-    border: 20px solid black !important;
+.icon-wrapper img {
+  width: 14px;
+  height: 14px;
+  filter: brightness(0) invert(1); /* makes the icon white */
 }
 
-.circle-icon:hover {
-    background-color: #2196f3;
+.hotel-icon .icon-wrapper {
+  background-color: #FF69B4;
+  border-radius: 50%;
+  padding: 3px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.museum-icon .icon-wrapper {
+  background-color: #206fe3;
+  border-radius: 50%;
+  padding: 3px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.artwork-icon .icon-wrapper {
+  background-color: #FFD700;
+  border-radius: 50%;
+  padding: 3px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.theater-icon .icon-wrapper {
+  background-color: #b268f8;
+  border-radius: 50%;
+  padding: 3px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-icon .icon-wrapper {
+  background-color:rgb(34, 255, 0);
+  border-radius: 50%;
+  padding: 3px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.default-icon .icon-wrapper {
+  background-color:rgb(64, 211, 240);
+  border-radius: 50%;
+  padding: 3px;
+  width: 15px;
+  height: 15px;
+  border: 2px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
 }
