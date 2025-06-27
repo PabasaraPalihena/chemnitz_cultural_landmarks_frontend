@@ -19,11 +19,11 @@
   flex: auto;
   height: 100%;
   position: relative;
-  max-width: calc(100% - 730px);
+  max-width: calc(100% - 380px);
 }
 
 .results-container {
-  width: 730px;
+  width: 380px;
   overflow-y: auto;
 }
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-
+import Footer from "../../common/view/Footer";
 import Card from "../../common/MediaCard/Card";
 import SearchResultsCard from "../../common/MediaCard/SearchResultsCard";
 import Pagination from "@mui/material/Pagination";
@@ -25,16 +25,14 @@ export default function SearchResults({
   const uId = token ? jwtDecode(token).id : null;
 
   const [currentPage, setCurrentPage] = useState(1);
+  console.log(landmarks);
 
   useEffect(() => {
     setLoading(true);
     fetchSavedLandmarks();
-    // console.log("search value: ",searchedValue);
     if (searchedValue !== null && searchedValue !== "null") {
-      // console.log("searchvalue loading");
       searchLandmarks();
     } else {
-      // console.log("Default loading:");
       defaultSearch();
     }
   }, [searchedValue, location.search]);
@@ -259,18 +257,21 @@ export default function SearchResults({
       )}
 
       {totalPages > 1 && (
-        <div className="pagination__container">
-          <Stack spacing={2}>
-            <Pagination
-              count={totalPages}
-              page={currentPage}
-              variant="outlined"
-              color="primary"
-              onChange={handlePageChange}
-              size="large"
-            />
-          </Stack>
-        </div>
+        <>
+          <div className="pagination__container">
+            <Stack spacing={2}>
+              <Pagination
+                count={totalPages}
+                page={currentPage}
+                variant="outlined"
+                color="primary"
+                onChange={handlePageChange}
+                size="medium"
+              />
+            </Stack>
+          </div>
+          <Footer />
+        </>
       )}
     </div>
   );

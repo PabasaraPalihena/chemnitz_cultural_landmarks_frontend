@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import Axios from "axios";
 import AdvancedSearch from "../advancedSearch/AdvancedSearch";
 import OSM from "../map/OSM";
-import Footer from "../../common/view/Footer";
 import SearchResults from "./SearchResults";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
 import "./SearchLandmark.css";
@@ -178,20 +177,19 @@ export default function SearchLandmark() {
       <AdvancedSearch searchedValue={searchedValue} />
       <hr />
       <div className="content-wrapper">
-        <div className="map-container">
-          <OSM
-            locationCoordinates={searchedLocationCoordinates}
-            landmarks={landmarks}
-            onMapChange={onMapChange}
-          />
-        </div>
         <div className="results-container">
           <SearchResults
             searchedValue={searchedValue}
             landmarks={landmarks}
             setLandmarks={setLandmarks}
           />
-          <Footer />
+        </div>
+        <div className="map-container">
+          <OSM
+            locationCoordinates={searchedLocationCoordinates}
+            landmarks={landmarks}
+            onMapChange={onMapChange}
+          />
         </div>
       </div>
     </div>
