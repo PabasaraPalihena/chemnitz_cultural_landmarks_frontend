@@ -63,9 +63,9 @@ const OSM = ({ locationCoordinates, landmarks, onMapChange }) => {
           html: `<div class="icon-wrapper">
              <img src="${resturantIcon}"/>
            </div>`,
-          iconSize: [25, 25],
-          iconAnchor: [12, 25],
-          popupAnchor: [0, -25],
+          iconSize: [15, 15],
+          iconAnchor: [8, 15],
+          popupAnchor: [0, -15],
         });
       case "hotel":
       case "guest_house":
@@ -74,9 +74,9 @@ const OSM = ({ locationCoordinates, landmarks, onMapChange }) => {
           html: `<div class="icon-wrapper">
              <img src="${hotelIcon}"/>
            </div>`,
-          iconSize: [25, 25],
-          iconAnchor: [12, 25],
-          popupAnchor: [0, -25],
+          iconSize: [15, 15],
+          iconAnchor: [8, 15],
+          popupAnchor: [0, -15],
         });
       case "theatre":
       case "theater":
@@ -85,9 +85,9 @@ const OSM = ({ locationCoordinates, landmarks, onMapChange }) => {
           html: `<div class="icon-wrapper">
              <img src="${theatreIcon}"/>
            </div>`,
-          iconSize: [25, 25],
-          iconAnchor: [15, 30],
-          popupAnchor: [0, -30],
+          iconSize: [15, 15],
+          iconAnchor: [8, 15],
+          popupAnchor: [0, -15],
         });
       case "museum":
         return L.divIcon({
@@ -95,9 +95,9 @@ const OSM = ({ locationCoordinates, landmarks, onMapChange }) => {
           html: `<div class="icon-wrapper">
              <img src="${museumIcon}"/>
            </div>`,
-          iconSize: [25, 25],
-          iconAnchor: [15, 30],
-          popupAnchor: [0, -30],
+          iconSize: [15, 15],
+          iconAnchor: [8, 15],
+          popupAnchor: [0, -15],
         });
       case "artwork":
         return L.divIcon({
@@ -105,9 +105,9 @@ const OSM = ({ locationCoordinates, landmarks, onMapChange }) => {
           html: `<div class="icon-wrapper">
              <img src="${artworkIcon}"/>
            </div>`,
-          iconSize: [25, 25],
-          iconAnchor: [15, 30],
-          popupAnchor: [0, -30],
+          iconSize: [15, 15],
+          iconAnchor: [8, 15],
+          popupAnchor: [0, -15],
         });
       case "gallery":
         return L.divIcon({
@@ -115,9 +115,9 @@ const OSM = ({ locationCoordinates, landmarks, onMapChange }) => {
           html: `<div class="icon-wrapper">
              <img src="${galleryIcon}"/>
            </div>`,
-          iconSize: [25, 25],
-          iconAnchor: [15, 30],
-          popupAnchor: [0, -30],
+          iconSize: [15, 15],
+          iconAnchor: [8, 15],
+          popupAnchor: [0, -15],
         });
       default:
         return L.divIcon({
@@ -125,9 +125,9 @@ const OSM = ({ locationCoordinates, landmarks, onMapChange }) => {
           html: `<div class="icon-wrapper">
              <img src="${defaultIcon}"/>
            </div>`,
-          iconSize: [25, 25],
-          iconAnchor: [15, 30],
-          popupAnchor: [0, -30],
+          iconSize: [15, 15],
+          iconAnchor: [8, 15],
+          popupAnchor: [0, -15],
         });
     }
   };
