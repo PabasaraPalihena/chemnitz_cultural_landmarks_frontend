@@ -100,7 +100,10 @@ const OSM = ({ locationCoordinates, landmarks, onMapChange }) => {
       {landmarks.map((landmark) => (
         <Marker
           key={landmark._id}
-          position={[landmark.location.latitude, landmark.location.longitude]}
+          position={[
+            landmark.geometry.coordinates[1],
+            landmark.geometry.coordinates[0],
+          ]}
           icon={squareIcon}
           eventHandlers={{
             mouseover: (e) => {

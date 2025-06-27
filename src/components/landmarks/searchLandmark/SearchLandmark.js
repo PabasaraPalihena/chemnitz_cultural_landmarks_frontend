@@ -13,6 +13,7 @@ const API = process.env.REACT_APP_API;
 export default function SearchLandmark() {
   const location = useLocation();
   const [landmarks, setLandmarks] = useState([]);
+  console.log(landmarks);
   const defaultCoordinates = [50.832908, 12.915682];
   const [searchedLocationCoordinates, setSearchedLocationCoordinates] =
     useState(defaultCoordinates);
