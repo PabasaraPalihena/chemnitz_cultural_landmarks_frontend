@@ -78,7 +78,7 @@ export default function ChangePassword() {
   };
 
   return (
-    <div className="verification__page">
+    <div className="verification__page" style={{ marginTop: "50px" }}>
       <h1>Rest your password</h1>
       <p className="instruction">Create a password to access your account.</p>
       <FormControl
