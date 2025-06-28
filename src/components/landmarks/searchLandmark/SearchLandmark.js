@@ -18,13 +18,6 @@ export default function SearchLandmark() {
   const searchParams = new URLSearchParams(location.search);
   const searchedValue = searchParams.get("address");
 
-  const normalizePlaceType = (type) => {
-    if (!type) return null;
-    const lower = type.trim().toLowerCase();
-    console.log(lower);
-    return lower;
-  };
-
   const onMapChange = async (bounds) => {
     try {
       const { _northEast, _southWest } = bounds;

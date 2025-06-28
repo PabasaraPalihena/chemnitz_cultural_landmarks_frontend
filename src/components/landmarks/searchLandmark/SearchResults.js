@@ -40,20 +40,17 @@ export default function SearchResults({
     try {
       // Parse the filter parameters from the location object (URL)
       const searchParams = new URLSearchParams(location.search);
-      console.log(searchParams);
+
       const placeType = searchParams.get("placeType");
-      console.log(placeType);
 
       const res = await axios.get(
         `${API}/api/v1/landmark/search/${searchedValue}?placeType=${
           placeType || ""
         }`
       );
-      console.log("Response 01:", res);
       const data = res.data;
 
       if (data.success) {
-        // console.log("filterd Data :", data.data)
         setLandmarks(data.data);
         fetchSavedLandmarks();
       } else {
@@ -204,7 +201,6 @@ export default function SearchResults({
   const landmarksForCurrentPage = landmarks
     ? landmarks.slice(startIndex, endIndex)
     : [];
-  // console.log("prop:",properties)
 
   const handlePageChange = (event, page) => {
     setCurrentPage(page);

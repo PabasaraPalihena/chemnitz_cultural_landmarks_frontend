@@ -83,7 +83,7 @@ export default function AdvancedSearch({ searchedValue }) {
 
     try {
       const response = await axios.get(
-        `https://nominatim.openstreetmap.org/search?q=${inputValue}&format=json&countrycodes=GE`
+        `https://nominatim.openstreetmap.org/search?q=${inputValue}&format=json&countrycodes=DE`
       );
       setSuggestions(response.data);
     } catch (error) {
