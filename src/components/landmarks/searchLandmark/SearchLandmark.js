@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import Axios from "axios";
 import AdvancedSearch from "../advancedSearch/AdvancedSearch";
@@ -11,55 +11,71 @@ const API = process.env.REACT_APP_API;
 
 export default function SearchLandmark() {
   const location = useLocation();
+
   const [landmarks, setLandmarks] = useState([]);
   const defaultCoordinates = [50.832908, 12.915682];
   const [searchedLocationCoordinates, setSearchedLocationCoordinates] =
     useState(defaultCoordinates);
+
+  // Store placeType in state to react on changes
+  const [placeType, setPlaceType] = useState(null);
+
+  // Store current map bounds in state so we can re-fetch on filter change
+  const [currentBounds, setCurrentBounds] = useState(null);
+
   const searchParams = new URLSearchParams(location.search);
   const searchedValue = searchParams.get("address");
 
+  // Update placeType state whenever URL search params change
+  useEffect(() => {
+    const pt = searchParams.get("placeType");
+    setPlaceType(pt); // can be null if none selected
+  }, [location.search]);
+
+  // onMapChange now takes bounds and placeType from state
   const onMapChange = async (bounds) => {
     try {
       const { _northEast, _southWest } = bounds;
       const northEast = [_northEast.lat, _northEast.lng];
       const southWest = [_southWest.lat, _southWest.lng];
 
-      const placeType = searchParams.get("placeType");
+      // Save current bounds so we can re-fetch on placeType change
+      setCurrentBounds(bounds);
 
-      //change the condition
+      // fetch every landmark in the box
+      const res = await Axios.post(`${API}/api/v1/landmark/bounds`, {
+        northEast,
+        southWest,
+        searchedValue,
+      });
+
+      let results = res.data.success ? res.data.data : [];
+
+      // filter in memory by placeType if set
       if (placeType) {
-        if (searchedValue !== null && searchedValue !== "null") {
-          const res = await Axios.post(`${API}/api/v1/landmark/search/`, {
-            searchedValue,
-            placeType,
-          });
-          setLandmarks(res.data.data);
-          console.log(res.data.data);
-        } else {
-          const res = await Axios.post(`${API}/api/v1/landmark/filter`, {
-            placeType,
-          });
-          setLandmarks(res.data.data);
-          console.log("without searchedValue: ", res.data.data);
-        }
-      } else {
-        console.log("else block executed");
-        const res = await Axios.post(`${API}/api/v1/landmark/bounds`, {
-          northEast,
-          southWest,
-          searchedValue,
-        });
-        if (res.data.success) {
-          setLandmarks(res.data.data);
-        } else {
-          setLandmarks([]);
-        }
+        results = results.filter(
+          (lm) =>
+            lm.properties.amenity === placeType ||
+            lm.properties.tourism === placeType
+        );
       }
+
+      setLandmarks(results);
     } catch (error) {
       console.warn("error:", error);
+      setLandmarks([]);
     }
   };
 
+  // When placeType changes, re-fetch landmarks using current bounds and new placeType
+  useEffect(() => {
+    if (currentBounds) {
+      onMapChange(currentBounds);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [placeType]);
+
+  // Your existing useEffect for searched location stays unchanged
   useEffect(() => {
     document.body.style.overflow = "hidden";
 
@@ -103,7 +119,6 @@ export default function SearchLandmark() {
       }
     };
 
-    // Immediately invoke the asynchronous function
     fetchSearchedLocation();
 
     return () => {
@@ -118,20 +133,16 @@ export default function SearchLandmark() {
           (position) => {
             const { latitude, longitude } = position.coords;
 
-            // Check if the obtained coordinates are within Chemnitz bounds
             if (isInChemnitz(latitude, longitude)) {
               resolve({ latitude, longitude });
             } else {
-              // If not in Chemnitz, resolve with default coordinates
               resolve({ latitude: 50.832908, longitude: 12.915682 });
             }
           },
           (error) => {
-            // If the user denies geolocation, resolve with default coordinates silently
             if (error.code === 1) {
               resolve({ latitude: 50.832908, longitude: 12.915682 });
             } else {
-              // If there's any other error, log it and resolve with default coordinates
               console.error("Error getting location:", error);
               resolve({ latitude: 50.832908, longitude: 12.915682 });
             }
@@ -149,9 +160,7 @@ export default function SearchLandmark() {
     });
   };
 
-  // Function to check if coordinates are within Chemnitz bounds
   const isInChemnitz = (latitude, longitude) => {
-    // Define the bounds of Chemnitz
     const chemnitzBounds = {
       minLatitude: 50.825,
       maxLatitude: 50.845,

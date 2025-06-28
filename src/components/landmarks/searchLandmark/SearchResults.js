@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -68,7 +68,6 @@ export default function SearchResults({
     try {
       const searchParams = new URLSearchParams(location.search);
       const placeType = searchParams.get("placeType");
-      console.log(placeType);
       if (placeType !== null && placeType !== "") {
         const res = await axios.post(`${API}/api/v1/landmark/filter`, {
           placeType,
