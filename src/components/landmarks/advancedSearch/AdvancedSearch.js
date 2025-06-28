@@ -32,12 +32,19 @@ const MenuProps = {
   },
 };
 
-const hometypes = ["Restaurant", "Museum", "Theatre", "Artwork"];
+const placetype = [
+  { label: "Restaurant", value: "restaurant" },
+  { label: "Museum", value: "museum" },
+  { label: "Theatre", value: "theatre" },
+  { label: "Artwork", value: "artwork" },
+  { label: "Hotel", value: "hotel,guest_house" },
+  { label: "Gallery", value: "gallery" },
+];
 
 export default function AdvancedSearch({ searchedValue }) {
   const navigate = useNavigate();
   const [value, setSearchedValue] = useState(searchedValue);
-  const [homeType, setHomeType] = useState([]);
+  const [placeType, setPlaceType] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const token = localStorage.getItem("token");
   const uId = token ? jwtDecode(token).id : null;
@@ -58,16 +65,16 @@ export default function AdvancedSearch({ searchedValue }) {
 
   useEffect(() => {
     handleSearch();
-  }, [homeType]);
+  }, [placeType]);
 
   const handleSearch = () => {
-    navigate(`/search?address=${value}&homeType=${homeType.join(",")}`);
+    navigate(`/search?address=${value}&placeType=${placeType.join(",")}`);
   };
 
   const handleClearSearch = () => {
     setSearchedValue("");
     setSuggestions([]);
-    navigate(`/search?homeType=${homeType.join(",")}`);
+    navigate(`/search?placeType=${placeType.join(",")}`);
   };
 
   const handleInputChange = async (e) => {
@@ -78,8 +85,6 @@ export default function AdvancedSearch({ searchedValue }) {
       const response = await axios.get(
         `https://nominatim.openstreetmap.org/search?q=${inputValue}&format=json&countrycodes=GE`
       );
-      // const suggestionNames = response.data.map(item => item.name);
-      // console.log("suggestionNames:",suggestionNames);
       setSuggestions(response.data);
     } catch (error) {
       console.error("Error fetching suggestions:", error);
@@ -88,7 +93,6 @@ export default function AdvancedSearch({ searchedValue }) {
   };
 
   const handleSelectSuggestion = (suggestion) => {
-    //suggetion.display_name
     setSearchedValue(suggestion.display_name);
     setSuggestions([]);
   };
@@ -104,11 +108,11 @@ export default function AdvancedSearch({ searchedValue }) {
     setIsInputFocused(true);
   };
 
-  const handleChange_HomeType = (event) => {
+  const handleChange_placeType = (event) => {
     const {
       target: { value },
     } = event;
-    setHomeType(
+    setPlaceType(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
@@ -129,7 +133,6 @@ export default function AdvancedSearch({ searchedValue }) {
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}
-            // onBlur={handleBlur}
             endAdornment={
               value && (
                 <ClearButton onClick={handleClearSearch} size="small">
@@ -154,14 +157,14 @@ export default function AdvancedSearch({ searchedValue }) {
         </Search>
 
         <>
-          <FormControl sx={{ m: 1, width: 150 }} size="small">
+          <FormControl sx={{ m: 1, width: 180 }} size="small">
             <Select
               labelId="demo-multiple-checkbox-label"
               id="demo-multiple-checkbox"
               multiple
               displayEmpty
-              value={homeType}
-              onChange={handleChange_HomeType}
+              value={placeType}
+              onChange={handleChange_placeType}
               input={
                 <OutlinedInput
                   sx={{
@@ -178,7 +181,7 @@ export default function AdvancedSearch({ searchedValue }) {
               }
               renderValue={(selected) => {
                 if (selected.length === 0) {
-                  return <>HOME TYPE</>;
+                  return <>Place Category</>;
                 }
 
                 return selected.join(", ");
@@ -187,12 +190,12 @@ export default function AdvancedSearch({ searchedValue }) {
               inputProps={{ "aria-label": "Without label" }}
             >
               <MenuItem disabled value="">
-                <em>Home Type</em>
+                <em>Place Category</em>
               </MenuItem>
-              {hometypes.map((name) => (
-                <MenuItem key={name} value={name}>
-                  <Checkbox checked={homeType.indexOf(name) > -1} />
-                  <ListItemText primary={name} />
+              {placetype.map((item) => (
+                <MenuItem key={item.value} value={item.value}>
+                  <Checkbox checked={placeType.includes(item.value)} />
+                  <ListItemText primary={item.label} />
                 </MenuItem>
               ))}
             </Select>

@@ -25,7 +25,6 @@ export default function SearchResults({
   const uId = token ? jwtDecode(token).id : null;
 
   const [currentPage, setCurrentPage] = useState(1);
-  console.log(landmarks);
 
   useEffect(() => {
     setLoading(true);
@@ -41,15 +40,16 @@ export default function SearchResults({
     try {
       // Parse the filter parameters from the location object (URL)
       const searchParams = new URLSearchParams(location.search);
-
-      const homeType = searchParams.get("homeType");
-      // console.log(searchedValue)
+      console.log(searchParams);
+      const placeType = searchParams.get("placeType");
+      console.log(placeType);
 
       const res = await axios.get(
-        `${API}/api/v1/landmark/search/${searchedValue}?homeType=${
-          homeType || ""
+        `${API}/api/v1/landmark/search/${searchedValue}?placeType=${
+          placeType || ""
         }`
       );
+      console.log("Response 01:", res);
       const data = res.data;
 
       if (data.success) {
@@ -70,13 +70,12 @@ export default function SearchResults({
   const defaultSearch = async () => {
     try {
       const searchParams = new URLSearchParams(location.search);
-      const homeType = searchParams.get("homeType");
-
-      if (homeType !== null && homeType !== "") {
+      const placeType = searchParams.get("placeType");
+      console.log(placeType);
+      if (placeType !== null && placeType !== "") {
         const res = await axios.post(`${API}/api/v1/landmark/filter`, {
-          homeType,
+          placeType,
         });
-        // console.log("Server Response 02:", res.data);
 
         setLandmarks(res.data.data);
         fetchSavedLandmarks();
@@ -93,7 +92,6 @@ export default function SearchResults({
 
           if (res.data.success) {
             setLandmarks(res.data.data);
-            console.log(res.data.data);
           } else {
             setLandmarks([]);
           }

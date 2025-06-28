@@ -34,7 +34,9 @@ export default function SearchResultCard({ landmarkDetails }) {
           }}
         >
           <Typography gutterBottom sx={{ fontSize: "18px", fontWeight: 550 }}>
-            Name
+            {landmarkDetails?.properties.amenity ||
+              landmarkDetails?.properties.tourism ||
+              "No name available"}
           </Typography>
         </div>
         <Typography

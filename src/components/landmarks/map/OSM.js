@@ -79,7 +79,6 @@ const OSM = ({ locationCoordinates, landmarks, onMapChange }) => {
           popupAnchor: [0, -15],
         });
       case "theatre":
-      case "theater":
         return L.divIcon({
           className: "custom-icon theater-icon",
           html: `<div class="icon-wrapper">

@@ -23,12 +23,10 @@ export default function SearchResultsCard({
 
   const handleFavoriteClick = (event) => {
     event.stopPropagation();
-    // console.log(uId)
     Axios.put(`${API}/api/v1/landmark/favourite/${landmarkDetails._id}`, {
       uId,
     })
       .then((res) => {
-        // console.log("Favorite status updated successfully");
         setIsLandmarkFavorite(!isLandmarkFavorite);
       })
       .catch((error) => {
@@ -89,7 +87,9 @@ export default function SearchResultsCard({
           }}
         >
           <Typography gutterBottom sx={{ fontSize: "18px", fontWeight: 550 }}>
-            Name
+            {landmarkDetails?.properties.amenity ||
+              landmarkDetails?.properties.tourism ||
+              "No name available"}
           </Typography>
         </div>
         <Typography
@@ -101,7 +101,7 @@ export default function SearchResultsCard({
             gap: "4px",
           }}
         >
-          {landmarkDetails?.name || "No name available"}
+          {landmarkDetails?.properties.name || "No name available"}
         </Typography>
       </CardContent>
     </Card>

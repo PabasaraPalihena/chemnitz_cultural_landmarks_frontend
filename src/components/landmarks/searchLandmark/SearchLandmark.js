@@ -12,50 +12,52 @@ const API = process.env.REACT_APP_API;
 export default function SearchLandmark() {
   const location = useLocation();
   const [landmarks, setLandmarks] = useState([]);
-  console.log(landmarks);
   const defaultCoordinates = [50.832908, 12.915682];
   const [searchedLocationCoordinates, setSearchedLocationCoordinates] =
     useState(defaultCoordinates);
   const searchParams = new URLSearchParams(location.search);
   const searchedValue = searchParams.get("address");
 
+  const normalizePlaceType = (type) => {
+    if (!type) return null;
+    const lower = type.trim().toLowerCase();
+    console.log(lower);
+    return lower;
+  };
+
   const onMapChange = async (bounds) => {
-    // console.log("onMapChange triggered")
     try {
       const { _northEast, _southWest } = bounds;
       const northEast = [_northEast.lat, _northEast.lng];
       const southWest = [_southWest.lat, _southWest.lng];
-      // console.log(southWest)
 
-      const homeType = searchParams.get("homeType");
+      const placeType = searchParams.get("placeType");
+      console.log("placeType:", placeType);
 
-      if (homeType !== null && homeType !== "") {
-        console.log("filter", searchedValue);
+      //change the condition
+      if (placeType) {
         if (searchedValue !== null && searchedValue !== "null") {
-          const res = await Axios.get(
-            `${API}/api/v1/landmark/search/${searchedValue}?homeType=${
-              homeType || ""
-            }`
-          );
-          // console.log("Server Response 02:", res.data);
+          const res = await Axios.post(`${API}/api/v1/landmark/search/`, {
+            searchedValue,
+            placeType,
+          });
           setLandmarks(res.data.data);
+          console.log(res.data.data);
         } else {
           const res = await Axios.post(`${API}/api/v1/landmark/filter`, {
-            homeType,
+            placeType,
           });
-          // console.log(res)
-          // console.log("Server Response 02:", res.data);
           setLandmarks(res.data.data);
+          console.log("without searchedValue: ", res.data.data);
         }
       } else {
-        const res = await Axios.post(`${API}/api/v1/property/searchByBounds`, {
+        const res = await Axios.post(`${API}/api/v1/landmark/searchByBounds`, {
           northEast,
           southWest,
           searchedValue,
         });
         if (res.data.success) {
           setLandmarks(res.data.data);
-          // console.log(res.data.data);
         } else {
           setLandmarks([]);
         }
