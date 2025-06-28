@@ -25,7 +25,6 @@ export default function SearchLandmark() {
       const southWest = [_southWest.lat, _southWest.lng];
 
       const placeType = searchParams.get("placeType");
-      console.log("placeType:", placeType);
 
       //change the condition
       if (placeType) {
@@ -44,7 +43,8 @@ export default function SearchLandmark() {
           console.log("without searchedValue: ", res.data.data);
         }
       } else {
-        const res = await Axios.post(`${API}/api/v1/landmark/searchByBounds`, {
+        console.log("else block executed");
+        const res = await Axios.post(`${API}/api/v1/landmark/bounds`, {
           northEast,
           southWest,
           searchedValue,
