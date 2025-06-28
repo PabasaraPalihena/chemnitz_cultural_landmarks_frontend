@@ -208,7 +208,7 @@ export default function SearchResults({
   return (
     <div className="search-results-container">
       {loading ? (
-        <div className="SR_Estate_component">
+        <div className="SR_Place_component">
           {Array.from(new Array(ITEMS_PER_PAGE)).map((_, index) => (
             <div key={index} className="SR_Card_wrapper">
               <Skeleton variant="rectangular" width={330} height={230} />
@@ -218,7 +218,7 @@ export default function SearchResults({
           ))}
         </div>
       ) : (
-        <div className="SR_Estate_component">
+        <div className="SR_Place_component">
           {landmarksForCurrentPage.length === 0 ? (
             <div
               style={{

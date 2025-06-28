@@ -1,4 +1,4 @@
-  .SR_Estate_component {
+  .SR_Place_component {
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
@@ -36,7 +36,7 @@
   }
 
   @media screen and (max-width: 1100px) {
-    .SR_Estate_component {
+    .SR_Place_component {
       display: flex;
       justify-content: center;
       align-items: center;

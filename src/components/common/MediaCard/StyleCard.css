@@ -5,13 +5,13 @@
   .custom-card:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
   }
-  
-  .propertyD-card {
+
+  .place-card {
     width: 340px;
     height: 200px;
     transition: box-shadow 0.5s;
   }
   
-  .propertyD-card:hover {
+  .place-card:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
   }

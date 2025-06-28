@@ -11,37 +11,31 @@ import "./StyleCard.css";
 
 const API = process.env.REACT_APP_API;
 
-export default function SearchResultsCard({
-  landmarkDetails,
-  savedLandmarks,
-  uId,
-}) {
+export default function SavedCard({ landmarks, refreshPage, uId }) {
   const navigate = useNavigate();
-  const [isLandmarkFavorite, setIsLandmarkFavorite] = useState(
-    savedLandmarks.includes(landmarkDetails._id)
-  );
-
-  const handleFavoriteClick = (event) => {
-    event.stopPropagation();
-    Axios.put(`${API}/api/v1/landmark/favourite/${landmarkDetails._id}`, {
-      uId,
-    })
-      .then((res) => {
-        setIsLandmarkFavorite(!isLandmarkFavorite);
-      })
-      .catch((error) => {
-        console.error("Error updating favorite status:", error);
-      });
-  };
+  const [isLandmarkFavorite, setIsLandmarkFavorite] = useState(true);
 
   const handleCardClick = () => {
-    navigate(`/homeinformation/${landmarkDetails._id}`, {
+    navigate(`/homeinformation/${landmarks._id}`, {
       state: {
-        landmark: landmarkDetails,
+        landmark: landmarks,
         favourite: isLandmarkFavorite,
         uId: uId,
       },
     });
+  };
+
+  const handleFavoriteClick = (event) => {
+    event.stopPropagation();
+    Axios.put(`${API}/api/v1/landmark/favourite/${landmarks._id}`, {
+      uId,
+    })
+      .then((res) => {
+        refreshPage();
+      })
+      .catch((error) => {
+        console.error("Error updating favorite status:", error);
+      });
   };
 
   return (
@@ -87,8 +81,8 @@ export default function SearchResultsCard({
           }}
         >
           <Typography gutterBottom sx={{ fontSize: "18px", fontWeight: 550 }}>
-            {landmarkDetails?.properties.amenity ||
-              landmarkDetails?.properties.tourism ||
+            {landmarks?.properties.amenity ||
+              landmarks?.properties.tourism ||
               "No name available"}
           </Typography>
         </div>
@@ -101,7 +95,7 @@ export default function SearchResultsCard({
             gap: "4px",
           }}
         >
-          {landmarkDetails?.properties.name || "No name available"}
+          {landmarks?.properties.name || "No name available"}
         </Typography>
       </CardContent>
     </Card>

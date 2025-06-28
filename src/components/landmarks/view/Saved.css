@@ -1,0 +1,14 @@
+  .Place_component {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .Card_wrapper {
+    margin: 7px;
+  }
+  .Card__text {
+    text-decoration: none;
+  }
