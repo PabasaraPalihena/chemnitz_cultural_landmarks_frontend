@@ -84,11 +84,6 @@ export default function UserNavbar({ setIsLoggedIn, userInfo }) {
             <ListItemText secondary="Locations" />
           </Link>
         </ListItem>
-        {/* <ListItem className="list-item">
-          <Link to="/about" className="navbar__link">
-            <ListItemText secondary="About Chemnitz" />
-          </Link>
-        </ListItem> */}
         <ListItem className="list-item">
           <Link to="/saved" className="navbar__link">
             <ListItemText secondary="Saved" />
@@ -115,6 +110,15 @@ export default function UserNavbar({ setIsLoggedIn, userInfo }) {
 
   const accountSettings = () => {
     navigate(`/accountsettings/${uId}`, {
+      state: {
+        user: userInfo,
+      },
+    });
+    setAnchorEl(null);
+  };
+
+  const myReviews = () => {
+    navigate(`/review/${uId}`, {
       state: {
         user: userInfo,
       },
@@ -160,15 +164,6 @@ export default function UserNavbar({ setIsLoggedIn, userInfo }) {
                     Locations
                   </Button>
                 </Link>
-                {/* <Link to="/about">
-                  <Button
-                    variant="text"
-                    className="header__links"
-                    style={{ width: "155px" }}
-                  >
-                    About Chemnitz
-                  </Button>
-                </Link> */}
                 <Link to="/saved">
                   <Button
                     variant="text"
@@ -202,6 +197,7 @@ export default function UserNavbar({ setIsLoggedIn, userInfo }) {
                 onClose={handleClose}
               >
                 <MenuItem onClick={accountSettings}>Account Settings</MenuItem>
+                <MenuItem onClick={myReviews}>My Reviews</MenuItem>
                 <Divider />
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </Menu>

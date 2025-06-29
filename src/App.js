@@ -22,6 +22,7 @@ import Navbar from "./components/common/Navbar/Navbar";
 import UserNavbar from "./components/common/Navbar/UserNavbar";
 import VerifyStateNavbar from "./components/common/Navbar/VerifyStateNavbar";
 import About from "./components/landmarks/view/About";
+import MyReviews from "./components/user/page/MyReviews";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -100,6 +101,7 @@ function App() {
               />
             }
           />
+          <Route path="/review/:id" element={<MyReviews />} />
         </Routes>
         <FooterWrapper />
       </Router>
