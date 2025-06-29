@@ -2,19 +2,28 @@ import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import { jwtDecode } from "jwt-decode";
 import "./StyleCard.css";
 
 export default function NearByCard({ landmarkDetails }) {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const uId = token ? jwtDecode(token).id : null;
 
   const handleCardClick = () => {
-    navigate(`/info/${landmarkDetails._id}`, {
-      state: {
-        landmark: landmarkDetails,
-        favourite: false,
-        uId: "",
-      },
-    });
+    if (uId) {
+      navigate(`/infor/${landmarkDetails._id}`, {
+        state: {
+          landmark: landmarkDetails,
+        },
+      });
+    } else {
+      navigate(`/info/${landmarkDetails._id}`, {
+        state: {
+          landmark: landmarkDetails,
+        },
+      });
+    }
   };
 
   const capitalizeFirstLetter = (str) => {
