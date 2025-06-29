@@ -91,7 +91,8 @@ export default function Home() {
           }}
         >
           <h1 className="find-heading" style={{ color: "#fff" }}>
-            Cultural Landmarks in Chemnitz
+            {/* Cultural Landmarks in Chemnitz */}
+            European Cultural City 2025
           </h1>
           <br />
           <div style={{ display: "flex", justifyContent: "center" }}>
