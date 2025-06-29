@@ -10,7 +10,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Skeleton from "@mui/material/Skeleton";
 import MuiAlert from "@mui/material/Alert";
 import Pagination from "@mui/material/Pagination";
-import { Snackbar } from "@mui/material";
+import { Snackbar, TextField, Button, Rating } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -23,9 +23,10 @@ import BrushIcon from "@mui/icons-material/Brush";
 import WallpaperIcon from "@mui/icons-material/Wallpaper";
 import "./Info.css";
 import NearByCard from "../../common/MediaCard/NearByCard";
+import ReviewSection from "./ReviewSection";
 
 const API = process.env.REACT_APP_API;
-const NEARBYITEMS_PER_PAGE = 5;
+const NEARBYITEMS_PER_PAGE = 6;
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -40,8 +41,22 @@ export default function LandmarkInfoSignin() {
   const [loading, setLoading] = useState(true);
   const [savedLandmarks, setSavedLandmarks] = useState([]);
   const [isLandmarkFavorite, setIsLandmarkFavorite] = useState(false);
+  const [reviewText, setReviewText] = useState("");
+  const [reviewRating, setReviewRating] = useState(0);
+  const [reviewSuccess, setReviewSuccess] = useState(false);
+
   const token = localStorage.getItem("token");
   const uId = token ? jwtDecode(token).id : null;
+
+  const totalPages = nearbyProperties
+    ? Math.ceil(nearbyProperties.count / NEARBYITEMS_PER_PAGE)
+    : 0;
+
+  const startIndex = (currentPage - 1) * NEARBYITEMS_PER_PAGE;
+  const endIndex = startIndex + NEARBYITEMS_PER_PAGE;
+  const nearbyPropertiesForCurrentPage = nearbyProperties
+    ? nearbyProperties.data.slice(startIndex, endIndex)
+    : [];
 
   useEffect(() => {
     if (uId) {
@@ -102,15 +117,21 @@ export default function LandmarkInfoSignin() {
       });
   };
 
-  const totalPages = nearbyProperties
-    ? Math.ceil(nearbyProperties.count / NEARBYITEMS_PER_PAGE)
-    : 0;
-
-  const startIndex = (currentPage - 1) * NEARBYITEMS_PER_PAGE;
-  const endIndex = startIndex + NEARBYITEMS_PER_PAGE;
-  const nearbyPropertiesForCurrentPage = nearbyProperties
-    ? nearbyProperties.data.slice(startIndex, endIndex)
-    : [];
+  const handleReviewSubmit = async () => {
+    try {
+      await Axios.post(`${API}/api/v1/review`, {
+        userId: uId,
+        landmarkId: landmarkDetails._id,
+        review: reviewText,
+        rating: reviewRating,
+      });
+      setReviewText("");
+      setReviewRating(0);
+      setReviewSuccess(true);
+    } catch (error) {
+      console.error("Review submit error:", error);
+    }
+  };
 
   const handlePageChange = (_, page) => {
     setCurrentPage(page);
@@ -312,11 +333,26 @@ export default function LandmarkInfoSignin() {
           )}
       </div>
 
-      <div className="main__box">
-        <div className="nearby_home">
-          <Typography variant="body1" gutterBottom>
-            <h1 style={{ textAlign: "left" }}>Nearby Homes</h1>
-          </Typography>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "40px",
+          justifyContent: "space-between",
+          padding: "20px 40px",
+        }}
+      >
+        {/* Review Section */}
+        <div
+          style={{ flex: "1 1 450px", maxWidth: "500px", marginLeft: "30px" }}
+        >
+          <ReviewSection />
+        </div>
+
+        {/* Nearby places Section */}
+        <div style={{ flex: "2 1 600px" }}>
+          <h1 style={{ textAlign: "left" }}>Nearby Places</h1>
+
           <div className="landmark_cards_container">
             {nearbyPropertiesForCurrentPage === null ? (
               Array.from(new Array(NEARBYITEMS_PER_PAGE)).map((_, index) => (
@@ -338,8 +374,9 @@ export default function LandmarkInfoSignin() {
               ))
             )}
           </div>
+
           {totalPages > 1 && (
-            <div className="pagination_container">
+            <div className="pagination_container" style={{ marginTop: "16px" }}>
               <Pagination
                 className="custom_pagination"
                 count={totalPages}

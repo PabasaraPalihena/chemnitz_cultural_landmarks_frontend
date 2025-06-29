@@ -258,7 +258,7 @@ export default function LandmarkInformation() {
       <div className="main__box">
         <div className="nearby_home">
           <Typography variant="body1" gutterBottom>
-            <h1 style={{ textAlign: "left" }}>Nearby Homes</h1>
+            <h1 style={{ textAlign: "left" }}>Nearby Places</h1>
           </Typography>
           <div className="landmark_cards_container">
             {nearbyPropertiesForCurrentPage === null ? (
