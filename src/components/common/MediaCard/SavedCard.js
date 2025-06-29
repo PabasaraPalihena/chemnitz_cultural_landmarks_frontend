@@ -38,6 +38,11 @@ export default function SavedCard({ landmarks, refreshPage, uId }) {
       });
   };
 
+  const capitalizeFirstLetter = (str) => {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   return (
     <Card
       className="place-card"
@@ -81,11 +86,26 @@ export default function SavedCard({ landmarks, refreshPage, uId }) {
           }}
         >
           <Typography gutterBottom sx={{ fontSize: "18px", fontWeight: 550 }}>
-            {landmarks?.properties.amenity ||
-              landmarks?.properties.tourism ||
-              "No name available"}
+            {capitalizeFirstLetter(
+              landmarks?.properties.amenity ||
+                landmarks?.properties.tourism ||
+                "No name available"
+            )}
           </Typography>
         </div>
+        <Typography
+          gutterBottom
+          sx={{ fontSize: "17px", fontWeight: 550, color: "#555" }}
+        >
+          {" "}
+          {(
+            landmarks?.properties.name ||
+            landmarks?.properties.artwork_type ||
+            ""
+          )
+            .replace(/Chemnitz/gi, "")
+            .trim()}
+        </Typography>
         <Typography
           style={{
             fontSize: "15px",
@@ -95,7 +115,15 @@ export default function SavedCard({ landmarks, refreshPage, uId }) {
             gap: "4px",
           }}
         >
-          {landmarks?.properties.name || "No name available"}
+          {landmarks?.properties["addr:street"] &&
+          landmarks?.properties["addr:housenumber"]
+            ? `${landmarks.properties["addr:street"]} ${landmarks.properties["addr:housenumber"]}`
+            : ""}
+          <br />
+          {(landmarks?.properties["addr:city"] || "") +
+            (landmarks?.properties["addr:postcode"]
+              ? `, ${landmarks.properties["addr:postcode"]}`
+              : "")}
         </Typography>
       </CardContent>
     </Card>

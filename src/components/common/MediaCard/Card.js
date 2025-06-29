@@ -19,6 +19,11 @@ export default function SearchResultCard({ landmarkDetails }) {
     // });
   };
 
+  const capitalizeFirstLetter = (str) => {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   return (
     <Card
       className="propertyD-card"
@@ -34,11 +39,26 @@ export default function SearchResultCard({ landmarkDetails }) {
           }}
         >
           <Typography gutterBottom sx={{ fontSize: "18px", fontWeight: 550 }}>
-            {landmarkDetails?.properties.amenity ||
-              landmarkDetails?.properties.tourism ||
-              "No name available"}
+            {capitalizeFirstLetter(
+              landmarkDetails?.properties.amenity ||
+                landmarkDetails?.properties.tourism ||
+                "No name available"
+            )}
           </Typography>
         </div>
+        <Typography
+          gutterBottom
+          sx={{ fontSize: "17px", fontWeight: 550, color: "#555" }}
+        >
+          {" "}
+          {(
+            landmarkDetails?.properties.name ||
+            landmarkDetails?.properties.artwork_type ||
+            ""
+          )
+            .replace(/Chemnitz/gi, "")
+            .trim()}
+        </Typography>
         <Typography
           style={{
             fontSize: "15px",
@@ -48,8 +68,15 @@ export default function SearchResultCard({ landmarkDetails }) {
             gap: "4px",
           }}
         >
-          {/* Show landmark name or fallback */}
-          {landmarkDetails?.name || "No name available"}
+          {landmarkDetails?.properties["addr:street"] &&
+          landmarkDetails?.properties["addr:housenumber"]
+            ? `${landmarkDetails.properties["addr:street"]} ${landmarkDetails.properties["addr:housenumber"]}`
+            : ""}
+          <br />
+          {(landmarkDetails?.properties["addr:city"] || "") +
+            (landmarkDetails?.properties["addr:postcode"]
+              ? `, ${landmarkDetails.properties["addr:postcode"]}`
+              : "")}
         </Typography>
       </CardContent>
     </Card>
