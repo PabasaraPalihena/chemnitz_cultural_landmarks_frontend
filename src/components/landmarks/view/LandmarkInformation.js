@@ -35,14 +35,21 @@ export default function LandmarkInformation() {
   const [nearbyProperties, setNearbyProperties] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
+    setLoading(true);
     Axios.get(`${API}/api/v1/landmark/${landmarkId}`)
       .then((response) => {
         setLandmarkDetails(response.data.data);
         const [lng, lat] = response.data.data.geometry.coordinates;
         fetchNearbyProperties(lat, lng, landmarkId);
+        setLoading(false);
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
   }, [landmarkId]);
 
   const fetchNearbyProperties = async (latitude, longitude, landmarkId) => {
@@ -99,7 +106,7 @@ export default function LandmarkInformation() {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
-  if (!landmarkDetails) {
+  if (!landmarkDetails || loading) {
     return (
       <div className="main__box">
         <Skeleton variant="rectangular" width="100%" height={600} />
