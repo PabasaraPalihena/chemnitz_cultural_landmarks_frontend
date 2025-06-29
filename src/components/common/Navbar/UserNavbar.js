@@ -84,11 +84,11 @@ export default function UserNavbar({ setIsLoggedIn, userInfo }) {
             <ListItemText secondary="Locations" />
           </Link>
         </ListItem>
-        <ListItem className="list-item">
+        {/* <ListItem className="list-item">
           <Link to="/about" className="navbar__link">
             <ListItemText secondary="About Chemnitz" />
           </Link>
-        </ListItem>
+        </ListItem> */}
         <ListItem className="list-item">
           <Link to="/saved" className="navbar__link">
             <ListItemText secondary="Saved" />
@@ -160,7 +160,7 @@ export default function UserNavbar({ setIsLoggedIn, userInfo }) {
                     Locations
                   </Button>
                 </Link>
-                <Link to="/about">
+                {/* <Link to="/about">
                   <Button
                     variant="text"
                     className="header__links"
@@ -168,7 +168,7 @@ export default function UserNavbar({ setIsLoggedIn, userInfo }) {
                   >
                     About Chemnitz
                   </Button>
-                </Link>
+                </Link> */}
                 <Link to="/saved">
                   <Button
                     variant="text"

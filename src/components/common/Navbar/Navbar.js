@@ -47,11 +47,11 @@ export default function Navbar({ setIsLoggedIn }) {
             <ListItemText secondary="Locations" />
           </Link>
         </ListItem>
-        <ListItem className="list-item">
+        {/* <ListItem className="list-item">
           <Link to="/about" className="navbar__link">
             <ListItemText secondary="About Chemnitz" />
           </Link>
-        </ListItem>
+        </ListItem> */}
       </List>
     </div>
   );
@@ -93,7 +93,7 @@ export default function Navbar({ setIsLoggedIn }) {
                   Locations
                 </Button>
               </Link>
-              <Link to="/about">
+              {/* <Link to="/about">
                 <Button
                   variant="text"
                   className="header__links"
@@ -101,7 +101,7 @@ export default function Navbar({ setIsLoggedIn }) {
                 >
                   About Chemnitz
                 </Button>
-              </Link>
+              </Link> */}
             </div>
           )}
           <div className="header__Rightlinks">

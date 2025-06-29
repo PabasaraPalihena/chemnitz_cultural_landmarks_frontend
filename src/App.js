@@ -21,6 +21,7 @@ import Profile from "./components/user/page/Profile";
 import Navbar from "./components/common/Navbar/Navbar";
 import UserNavbar from "./components/common/Navbar/UserNavbar";
 import VerifyStateNavbar from "./components/common/Navbar/VerifyStateNavbar";
+import About from "./components/landmarks/view/About";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -89,6 +90,7 @@ function App() {
           <Route path="/verify/:id" element={<VerifyEmail />} />
           <Route path="/verifynotice" element={<VerificationPage />} />
           <Route path="/changepassword/:email" element={<ChangePassword />} />
+          <Route path="/about" element={<About />} />
           <Route
             path="/accountsettings/:id"
             element={

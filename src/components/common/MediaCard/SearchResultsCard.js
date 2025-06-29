@@ -44,6 +44,11 @@ export default function SearchResultsCard({
     });
   };
 
+  const capitalizeFirstLetter = (str) => {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   return (
     <Card
       className="place-card"
@@ -87,9 +92,11 @@ export default function SearchResultsCard({
           }}
         >
           <Typography gutterBottom sx={{ fontSize: "18px", fontWeight: 550 }}>
-            {landmarkDetails?.properties.amenity ||
-              landmarkDetails?.properties.tourism ||
-              "No name available"}
+            {capitalizeFirstLetter(
+              landmarkDetails?.properties.amenity ||
+                landmarkDetails?.properties.tourism ||
+                "No name available"
+            )}
           </Typography>
         </div>
         <Typography
