@@ -9,11 +9,20 @@ import Skeleton from "@mui/material/Skeleton";
 import MuiAlert from "@mui/material/Alert";
 import Pagination from "@mui/material/Pagination";
 import { Snackbar } from "@mui/material";
+import PhoneIcon from "@mui/icons-material/Phone";
+import LanguageIcon from "@mui/icons-material/Language";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import WheelchairPickupIcon from "@mui/icons-material/WheelchairPickup";
+import RestaurantIcon from "@mui/icons-material/Restaurant";
+import InfoIcon from "@mui/icons-material/Info";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import BrushIcon from "@mui/icons-material/Brush";
+import WallpaperIcon from "@mui/icons-material/Wallpaper";
 import "./Info.css";
 import Card from "../../common/MediaCard/Card";
 
 const API = process.env.REACT_APP_API;
-const NEARBYITEMS_PER_PAGE = 4;
+const NEARBYITEMS_PER_PAGE = 8;
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -22,9 +31,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function LandmarkInformation() {
   const { landmarkId } = useParams();
   const [landmarkDetails, setLandmarkDetails] = useState(null);
-  const [userDetails, setUserDetails] = useState(null);
-  const [open, setOpen] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [nearbyProperties, setNearbyProperties] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,15 +38,11 @@ export default function LandmarkInformation() {
   useEffect(() => {
     Axios.get(`${API}/api/v1/landmark/${landmarkId}`)
       .then((response) => {
-        setLandmarkDetails(response.data.data.landmark);
-        console.log("landmark", response.data.data.geometry);
-        const latitude = response.data.data.geometry.coordinates[1];
-        const longitude = response.data.data.geometry.coordinates[0];
-        fetchNearbyProperties(latitude, longitude, landmarkId);
+        setLandmarkDetails(response.data.data);
+        const [lng, lat] = response.data.data.geometry.coordinates;
+        fetchNearbyProperties(lat, lng, landmarkId);
       })
-      .catch((error) => {
-        console.error(error);
-      });
+      .catch(console.error);
   }, [landmarkId]);
 
   const fetchNearbyProperties = async (latitude, longitude, landmarkId) => {
@@ -51,10 +53,50 @@ export default function LandmarkInformation() {
         landmarkId,
       });
       setNearbyProperties(response.data);
-      console.log("Nearby properties:", response.data);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const totalPages = nearbyProperties
+    ? Math.ceil(nearbyProperties.count / NEARBYITEMS_PER_PAGE)
+    : 0;
+
+  const startIndex = (currentPage - 1) * NEARBYITEMS_PER_PAGE;
+  const endIndex = startIndex + NEARBYITEMS_PER_PAGE;
+  const nearbyPropertiesForCurrentPage = nearbyProperties
+    ? nearbyProperties.data.slice(startIndex, endIndex)
+    : [];
+
+  const handlePageChange = (_, page) => {
+    setCurrentPage(page);
+  };
+
+  const handleShareClick = () => {
+    const shareURL = `${window.location.origin}/info/${landmarkId}`;
+    const shareText = `Check out this place in Chemnitz`;
+
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "Explore Chemnitz",
+          text: shareText,
+          url: shareURL,
+        })
+        .catch(console.error);
+    } else {
+      prompt("Copy this link to share:", shareURL);
+    }
+  };
+
+  const handleAlertClose = (_, reason) => {
+    if (reason === "clickaway") return;
+    setOpenAlert(false);
+  };
+
+  const capitalizeFirstLetter = (str) => {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
   if (!landmarkDetails) {
@@ -65,152 +107,185 @@ export default function LandmarkInformation() {
     );
   }
 
-  // Calculate the total number of pages
-  const totalPages = nearbyProperties
-    ? Math.ceil(nearbyProperties.count / NEARBYITEMS_PER_PAGE)
-    : 0;
-
-  // Get the nearbyProperties for the current page
-  const startIndex = (currentPage - 1) * NEARBYITEMS_PER_PAGE;
-  const endIndex = startIndex + NEARBYITEMS_PER_PAGE;
-  const nearbyPropertiesForCurrentPage = nearbyProperties
-    ? nearbyProperties.data.slice(startIndex, endIndex)
-    : [];
-
-  const handlePageChange = (event, page) => {
-    setCurrentPage(page);
-  };
-
-  const handleShareClick = () => {
-    // Construct the URL to share
-    const shareURL = `${window.location.origin}/info/${landmarkId}`;
-    const shareText = `Check out this property on SriLankaHome`;
-
-    // Check if the Web Share API is supported
-    if (navigator.share) {
-      navigator
-        .share({
-          title: "SriLankaHome",
-          text: shareText,
-          url: shareURL,
-        })
-        .then(() => {
-          console.log("Thanks for sharing!");
-        })
-        .catch(console.error);
-    } else {
-      // Fallback for browsers that do not support the Web Share API
-      prompt("Copy this link to share:", shareURL);
-    }
-  };
-
-  const handleAlertClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpenAlert(false);
-  };
-
   return (
     <>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: "8px",
+          padding: "0 70px",
+        }}
+      >
+        <Typography variant="h5" fontWeight="bold">
+          {capitalizeFirstLetter(
+            landmarkDetails?.properties.amenity ||
+              landmarkDetails?.properties.tourism ||
+              "No name available"
+          )}
+          {" : "}
+          {(
+            landmarkDetails?.properties.name ||
+            landmarkDetails?.properties.artwork_type ||
+            ""
+          )
+            .replace(/Chemnitz/gi, "")
+            .trim()}
+        </Typography>
+
+        <IconButton
+          aria-label="Share"
+          onClick={handleShareClick}
+          sx={{
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
+            color: "white",
+            "&:hover": {
+              backgroundColor: "rgba(0, 0, 0, 0.3)",
+            },
+          }}
+        >
+          <ShareIcon />
+        </IconButton>
+      </div>
+
       <div className="main__box">
-        <div>
-          <IconButton
-            aria-label="Share"
-            style={{
-              position: "absolute",
-              top: 5,
-              right: 20,
-              backgroundColor: "rgba(0, 0, 0, 0.25)",
-            }}
-            onClick={handleShareClick}
-          >
-            <ShareIcon style={{ fontSize: 30, color: "white" }} />
-          </IconButton>
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          {(landmarkDetails?.properties["addr:street"] ||
+            landmarkDetails?.properties["addr:city"] ||
+            landmarkDetails?.properties["addr:postcode"]) && (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <LocationOnIcon sx={{ marginRight: 1 }} />
+              <span>
+                {landmarkDetails?.properties["addr:street"] || ""}
+                {landmarkDetails?.properties["addr:housenumber"]
+                  ? ` ${landmarkDetails.properties["addr:housenumber"]}`
+                  : ""}
+                {landmarkDetails?.properties["addr:city"]
+                  ? `, ${landmarkDetails.properties["addr:city"]}`
+                  : ""}
+                {landmarkDetails?.properties["addr:postcode"]
+                  ? ` ${landmarkDetails.properties["addr:postcode"]}`
+                  : ""}
+              </span>
+            </div>
+          )}
+
+          {landmarkDetails?.properties.website && (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <LanguageIcon sx={{ marginRight: 1 }} />
+              <a
+                href={landmarkDetails.properties.website}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {landmarkDetails.properties.website}
+              </a>
+            </div>
+          )}
+
+          {landmarkDetails?.properties.opening_hours && (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <AccessTimeIcon sx={{ marginRight: 1 }} />
+              {landmarkDetails.properties.opening_hours}
+            </div>
+          )}
+
+          {landmarkDetails?.properties.phone && (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <PhoneIcon sx={{ marginRight: 1 }} />
+              {landmarkDetails.properties.phone}
+            </div>
+          )}
+
+          {landmarkDetails?.properties.wheelchair && (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <WheelchairPickupIcon sx={{ marginRight: 1 }} />
+              {landmarkDetails.properties.wheelchair}
+            </div>
+          )}
+
+          {landmarkDetails?.properties.cuisine && (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <RestaurantIcon sx={{ marginRight: 1 }} />
+              {landmarkDetails.properties.cuisine}
+            </div>
+          )}
+
+          {landmarkDetails?.properties.description && (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <InfoIcon sx={{ marginRight: 1 }} />
+              <span style={{ whiteSpace: "pre-line" }}>
+                {landmarkDetails.properties.description}
+              </span>
+            </div>
+          )}
+
+          {landmarkDetails?.properties.artist_name && (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <BrushIcon sx={{ marginRight: 1 }} />
+              {landmarkDetails.properties.artist_name}
+            </div>
+          )}
+
+          {landmarkDetails?.properties.artwork_type && (
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <WallpaperIcon sx={{ marginRight: 1 }} />
+              {landmarkDetails.properties.artwork_type}
+            </div>
+          )}
         </div>
       </div>
+
+      <div className="map_box">
+        <h1 style={{ textAlign: "left" }}>Location</h1>
+        {landmarkDetails.geometry?.type === "Point" &&
+          Array.isArray(landmarkDetails.geometry.coordinates) && (
+            <InfoMap
+              lat={landmarkDetails.geometry.coordinates[1]}
+              lng={landmarkDetails.geometry.coordinates[0]}
+            />
+          )}
+      </div>
+
       <div className="main__box">
-        <div className="property_info">
-          <Typography gutterBottom className="property_price">
-            {(
-              landmarkDetails?.properties.name ||
-              landmarkDetails?.properties.artwork_type ||
-              ""
-            )
-              .replace(/Chemnitz/gi, "")
-              .trim()}
-          </Typography>
-        </div>
-        <div className="main__box">
+        <div className="nearby_home">
           <Typography variant="body1" gutterBottom>
-            <h1 style={{ textAlign: "left" }}>Description</h1>
-            <div style={{ whiteSpace: "pre-line" }}>
-              {landmarkDetails?.description.trim() || ""}
-            </div>
+            <h1 style={{ textAlign: "left" }}>Nearby Homes</h1>
           </Typography>
-        </div>
-
-        <div className="map_box">
-          <h1 style={{ textAlign: "left" }}>Location</h1>
-
-          {landmarkDetails.geometry?.type === "Point" &&
-            Array.isArray(landmarkDetails.geometry.coordinates) && (
-              <InfoMap
-                lat={landmarkDetails.geometry.coordinates[0]}
-                lng={landmarkDetails.geometry.coordinates[1]}
-              />
-            )}
-        </div>
-        <div className="main__box">
-          <div className="nearby_home">
-            <Typography variant="body1" gutterBottom>
-              <h1 style={{ textAlign: "left" }}>Nearby Homes</h1>
-            </Typography>
-            <div>
-              {nearbyPropertiesForCurrentPage === null ? (
-                <div>
-                  {Array.from(new Array(NEARBYITEMS_PER_PAGE)).map(
-                    (_, index) => (
-                      <div key={index} className="property_cards_container">
-                        <Skeleton
-                          variant="rectangular"
-                          width={240}
-                          height={250}
-                        />
-                      </div>
-                    )
-                  )}
-                </div>
-              ) : nearbyPropertiesForCurrentPage.length === 0 ? (
-                <div>
-                  <h4>
-                    No Nearby properties found for sale in the specified area
-                  </h4>
-                </div>
-              ) : (
-                <div className="property_cards_container">
-                  {nearbyPropertiesForCurrentPage.map((property) => (
-                    <div key={property._id.toString()}>
-                      <Card landmarkDetails={property} />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            <br />
-            {totalPages > 1 && (
-              <div className="pagination_container">
-                <Pagination
-                  className="custom_pagination"
-                  count={totalPages}
-                  page={currentPage}
-                  variant="outlined"
-                  onChange={handlePageChange}
-                  size="large"
+          <div className="landmark_cards_container">
+            {nearbyPropertiesForCurrentPage === null ? (
+              Array.from(new Array(NEARBYITEMS_PER_PAGE)).map((_, index) => (
+                <Skeleton
+                  key={index}
+                  variant="rectangular"
+                  width={240}
+                  height={250}
                 />
-              </div>
+              ))
+            ) : nearbyPropertiesForCurrentPage.length === 0 ? (
+              <h4>No Nearby properties found for sale in the specified area</h4>
+            ) : (
+              nearbyPropertiesForCurrentPage.map((landmark) => (
+                <Card
+                  key={landmark._id?.toString()}
+                  landmarkDetails={landmark}
+                />
+              ))
             )}
           </div>
+          {totalPages > 1 && (
+            <div className="pagination_container">
+              <Pagination
+                className="custom_pagination"
+                count={totalPages}
+                page={currentPage}
+                variant="outlined"
+                onChange={handlePageChange}
+                size="large"
+              />
+            </div>
+          )}
         </div>
       </div>
 
