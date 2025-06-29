@@ -22,7 +22,6 @@ import Navbar from "./components/common/Navbar/Navbar";
 import UserNavbar from "./components/common/Navbar/UserNavbar";
 import VerifyStateNavbar from "./components/common/Navbar/VerifyStateNavbar";
 import About from "./components/landmarks/view/About";
-import Info from "./components/landmarks/view/Info";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

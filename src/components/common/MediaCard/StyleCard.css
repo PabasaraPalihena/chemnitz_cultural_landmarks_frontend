@@ -15,3 +15,13 @@
   .place-card:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
   }
+
+  .nearby-card {
+    width: 260px;
+    height: 150px;
+    transition: box-shadow 0.5s;
+  }
+  
+  .nearby-card:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+  }

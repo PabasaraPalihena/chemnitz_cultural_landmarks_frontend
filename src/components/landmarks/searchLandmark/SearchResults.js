@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import Footer from "../../common/view/Footer";
-import Card from "../../common/MediaCard/Card";
+import DefaultCard from "../../common/MediaCard/DefaultCard";
 import SearchResultsCard from "../../common/MediaCard/SearchResultsCard";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
@@ -241,7 +241,7 @@ export default function SearchResults({
                     savedLandmarks={savedLandmarks}
                   />
                 ) : (
-                  <Card landmarkDetails={landmark} />
+                  <DefaultCard landmarkDetails={landmark} />
                 )}
               </div>
             ))

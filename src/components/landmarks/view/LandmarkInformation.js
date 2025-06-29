@@ -19,10 +19,10 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import BrushIcon from "@mui/icons-material/Brush";
 import WallpaperIcon from "@mui/icons-material/Wallpaper";
 import "./Info.css";
-import Card from "../../common/MediaCard/Card";
+import NearByCard from "../../common/MediaCard/NearByCard";
 
 const API = process.env.REACT_APP_API;
-const NEARBYITEMS_PER_PAGE = 8;
+const NEARBYITEMS_PER_PAGE = 5;
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -267,7 +267,7 @@ export default function LandmarkInformation() {
               <h4>No Nearby properties found for sale in the specified area</h4>
             ) : (
               nearbyPropertiesForCurrentPage.map((landmark) => (
-                <Card
+                <NearByCard
                   key={landmark._id?.toString()}
                   landmarkDetails={landmark}
                 />
@@ -282,7 +282,7 @@ export default function LandmarkInformation() {
                 page={currentPage}
                 variant="outlined"
                 onChange={handlePageChange}
-                size="large"
+                size="medium"
               />
             </div>
           )}

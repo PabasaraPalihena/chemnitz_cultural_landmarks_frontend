@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import "./StyleCard.css";
 
-export default function SearchResultCard({ landmarkDetails }) {
+export default function NearByCard({ landmarkDetails }) {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
@@ -24,7 +24,7 @@ export default function SearchResultCard({ landmarkDetails }) {
 
   return (
     <Card
-      className="propertyD-card"
+      className="nearby-card"
       onClick={handleCardClick}
       style={{ cursor: "pointer" }}
     >
