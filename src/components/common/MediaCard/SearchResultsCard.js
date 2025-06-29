@@ -100,6 +100,19 @@ export default function SearchResultsCard({
           </Typography>
         </div>
         <Typography
+          gutterBottom
+          sx={{ fontSize: "17px", fontWeight: 550, color: "#555" }}
+        >
+          {" "}
+          {(
+            landmarkDetails?.properties.name ||
+            landmarkDetails?.properties.artwork_type ||
+            ""
+          )
+            .replace(/Chemnitz/gi, "")
+            .trim()}
+        </Typography>
+        <Typography
           style={{
             fontSize: "15px",
             textAlign: "left",
@@ -108,7 +121,15 @@ export default function SearchResultsCard({
             gap: "4px",
           }}
         >
-          {landmarkDetails?.properties.name || "No name available"}
+          {landmarkDetails?.properties["addr:street"] &&
+          landmarkDetails?.properties["addr:housenumber"]
+            ? `${landmarkDetails.properties["addr:street"]} ${landmarkDetails.properties["addr:housenumber"]}`
+            : ""}
+          <br />
+          {(landmarkDetails?.properties["addr:city"] || "") +
+            (landmarkDetails?.properties["addr:postcode"]
+              ? `, ${landmarkDetails.properties["addr:postcode"]}`
+              : "")}
         </Typography>
       </CardContent>
     </Card>
