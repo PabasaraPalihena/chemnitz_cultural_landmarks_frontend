@@ -16,7 +16,7 @@ export default function SavedCard({ landmarks, refreshPage, uId }) {
   const [isLandmarkFavorite, setIsLandmarkFavorite] = useState(true);
 
   const handleCardClick = () => {
-    navigate(`/homeinformation/${landmarks._id}`, {
+    navigate(`/info/${landmarks._id}`, {
       state: {
         landmark: landmarks,
         favourite: isLandmarkFavorite,

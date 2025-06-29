@@ -8,15 +8,13 @@ export default function SearchResultCard({ landmarkDetails }) {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    console.log("implement the function");
-    // You can uncomment and use this when ready
-    // navigate(`/homeinformation/${landmarkDetails._id}`, {
-    //   state: {
-    //     landmark: landmarkDetails,
-    //     favourite: false, // replace with actual value if needed
-    //     uId: "", // replace with actual user ID
-    //   },
-    // });
+    navigate(`/info/${landmarkDetails._id}`, {
+      state: {
+        landmark: landmarkDetails,
+        favourite: false,
+        uId: "",
+      },
+    });
   };
 
   const capitalizeFirstLetter = (str) => {

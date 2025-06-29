@@ -19,7 +19,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function LandmarkInformation() {
+export default function Info() {
   const { landmarkId } = useParams();
   const [landmarkDetails, setLandmarkDetails] = useState(null);
   const [userDetails, setUserDetails] = useState(null);
@@ -33,9 +33,11 @@ export default function LandmarkInformation() {
     Axios.get(`${API}/api/v1/landmark/${landmarkId}`)
       .then((response) => {
         setLandmarkDetails(response.data.data.landmark);
-        console.log("landmark", response.data.data.geometry);
-        const latitude = response.data.data.geometry.coordinates[1];
-        const longitude = response.data.data.geometry.coordinates[0];
+        setUserDetails(response.data.data.user);
+        console.log(response.data.data.landmark);
+        console.log(response.data.data.user);
+        const latitude = response.data.data.landmark.location.latitude;
+        const longitude = response.data.data.landmark.location.longitude;
         fetchNearbyProperties(latitude, longitude, landmarkId);
       })
       .catch((error) => {
@@ -45,13 +47,12 @@ export default function LandmarkInformation() {
 
   const fetchNearbyProperties = async (latitude, longitude, landmarkId) => {
     try {
-      const response = await Axios.post(`${API}/api/v1/landmark/nearby`, {
+      const response = await Axios.post(`${API}/api/v1/property/nearby`, {
         latitude,
         longitude,
         landmarkId,
       });
       setNearbyProperties(response.data);
-      console.log("Nearby properties:", response.data);
     } catch (error) {
       console.error(error);
     }

@@ -22,6 +22,7 @@ import Navbar from "./components/common/Navbar/Navbar";
 import UserNavbar from "./components/common/Navbar/UserNavbar";
 import VerifyStateNavbar from "./components/common/Navbar/VerifyStateNavbar";
 import About from "./components/landmarks/view/About";
+import Info from "./components/landmarks/view/Info";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -85,12 +86,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<SearchLandmark />} />
           <Route path="/saved" element={<Saved />} />
-          <Route path="/info/:propertyId" element={<LandmarkInformation />} />
-          <Route path="/infor/:propertyId" element={<LandmarkInfoSignin />} />
           <Route path="/verify/:id" element={<VerifyEmail />} />
           <Route path="/verifynotice" element={<VerificationPage />} />
           <Route path="/changepassword/:email" element={<ChangePassword />} />
           <Route path="/about" element={<About />} />
+          <Route path="info/:landmarkId" element={<LandmarkInformation />} />
+          <Route path="/infor/:landmarkId" element={<LandmarkInfoSignin />} />
           <Route
             path="/accountsettings/:id"
             element={
