@@ -38,7 +38,8 @@ export default function ReviewCard({ review, onDelete, onSave }) {
       <CardContent>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography variant="subtitle1" sx={{ mb: 1 }}>
-            {review.landmarkData?.properties?.name || ""}
+            {review.landmarkData?.properties?.name ||
+              "".replace(/Chemnitz/gi, "").trim()}
           </Typography>
 
           {editMode ? (
