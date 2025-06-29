@@ -43,7 +43,6 @@ export default function LandmarkInfoSignin() {
   const [isLandmarkFavorite, setIsLandmarkFavorite] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [reviewRating, setReviewRating] = useState(0);
-  const [reviewSuccess, setReviewSuccess] = useState(false);
 
   const token = localStorage.getItem("token");
   const uId = token ? jwtDecode(token).id : null;
@@ -122,12 +121,11 @@ export default function LandmarkInfoSignin() {
       await Axios.post(`${API}/api/v1/review`, {
         userId: uId,
         landmarkId: landmarkDetails._id,
-        review: reviewText,
+        comment: reviewText,
         rating: reviewRating,
       });
       setReviewText("");
       setReviewRating(0);
-      setReviewSuccess(true);
     } catch (error) {
       console.error("Review submit error:", error);
     }
@@ -346,7 +344,13 @@ export default function LandmarkInfoSignin() {
         <div
           style={{ flex: "1 1 450px", maxWidth: "500px", marginLeft: "30px" }}
         >
-          <ReviewSection />
+          <ReviewSection
+            reviewText={reviewText}
+            setReviewText={setReviewText}
+            reviewRating={reviewRating}
+            setReviewRating={setReviewRating}
+            handleReviewSubmit={handleReviewSubmit}
+          />
         </div>
 
         {/* Nearby places Section */}

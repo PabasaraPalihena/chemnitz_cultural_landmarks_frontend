@@ -6,8 +6,12 @@ import {
   Button,
   Box,
   Snackbar,
-  Alert,
+  Alert as MuiAlert,
 } from "@mui/material";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 export default function ReviewSection({
   handleReviewSubmit,
@@ -16,11 +20,16 @@ export default function ReviewSection({
   reviewRating,
   setReviewRating,
 }) {
-  const [successOpen, setSuccessOpen] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+
+  const handleAlertClose = (event, reason) => {
+    if (reason === "clickaway") return;
+    setOpenAlert(false);
+  };
 
   const onSubmit = () => {
     handleReviewSubmit();
-    setSuccessOpen(true);
+    setOpenAlert(true);
   };
 
   return (
@@ -47,6 +56,7 @@ export default function ReviewSection({
             size="large"
           />
         </Box>
+
         <TextField
           label="Your review"
           multiline
@@ -71,12 +81,13 @@ export default function ReviewSection({
         </Button>
 
         <Snackbar
-          open={successOpen}
-          autoHideDuration={3000}
-          onClose={() => setSuccessOpen(false)}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          open={openAlert}
+          autoHideDuration={5000}
+          onClose={handleAlertClose}
         >
           <Alert
-            onClose={() => setSuccessOpen(false)}
+            onClose={handleAlertClose}
             severity="success"
             sx={{ width: "100%" }}
           >
