@@ -35,7 +35,7 @@ export default function SearchResultsCard({
   };
 
   const handleCardClick = () => {
-    navigate(`/info/${landmarkDetails._id}`, {
+    navigate(`/infor/${landmarkDetails._id}`, {
       state: {
         landmark: landmarkDetails,
         favourite: isLandmarkFavorite,
