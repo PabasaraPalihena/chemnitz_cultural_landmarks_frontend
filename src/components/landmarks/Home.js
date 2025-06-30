@@ -10,6 +10,7 @@ import {
 import Skeleton from "@mui/material/Skeleton";
 import axios from "axios";
 import "./Home.css";
+import TopRatedPlaces from "./view/TopRatedPlaces";
 
 export default function Home() {
   const [searchedValue, setSearchedValue] = useState("");
@@ -90,10 +91,13 @@ export default function Home() {
             width: "95%",
           }}
         >
-          <h1 className="find-heading" style={{ color: "#fff" }}>
-            {/* Cultural Landmarks in Chemnitz */}
+          {/* <h1 className="find-heading" style={{ color: "#fff" }}>
             European Cultural City 2025
-          </h1>
+          </h1> */}
+          <h2 className="find-heading" style={{ color: "#fff" }}>
+            Discover cultural sites around Chemnitz
+          </h2>
+
           <br />
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Search>
@@ -136,7 +140,8 @@ export default function Home() {
         </div>
       </div>
       <div>
-        <h1 className="home__headers">Famous Landmarks</h1>
+        <h1 className="home__headers">Best Rated Places</h1>
+        <TopRatedPlaces />
       </div>
     </>
   );
