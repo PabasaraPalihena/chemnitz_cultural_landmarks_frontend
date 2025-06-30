@@ -328,7 +328,7 @@ export default function LandmarkInformation() {
                 />
               ))
             ) : nearbyPropertiesForCurrentPage.length === 0 ? (
-              <h4>No Nearby places found in the specified area</h4>
+              <h4>No places found nearby within 500m of this area</h4>
             ) : (
               nearbyPropertiesForCurrentPage.map((landmark) => (
                 <NearByCard

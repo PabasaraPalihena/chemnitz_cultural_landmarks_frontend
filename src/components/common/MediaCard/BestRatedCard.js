@@ -18,13 +18,13 @@ export default function BestRatedCard({ landmarkDetails }) {
 
   const handleCardClick = () => {
     if (uId) {
-      navigate(`/infor/${landmarkDetails._id}`, {
+      navigate(`/infor/${landmarkDetails.landmarkId}`, {
         state: {
           landmark: landmarkDetails,
         },
       });
     } else {
-      navigate(`/info/${landmarkDetails._id}`, {
+      navigate(`/info/${landmarkDetails.landmarkId}`, {
         state: {
           landmark: landmarkDetails,
         },
