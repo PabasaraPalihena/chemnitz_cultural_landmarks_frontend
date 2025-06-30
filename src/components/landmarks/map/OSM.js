@@ -9,6 +9,7 @@ import {
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import "./OSM.css";
 
 import resturantIcon from "../../images/spoon-and-fork.png";
@@ -23,6 +24,9 @@ const OSM = ({ locationCoordinates, landmarks, onMapChange }) => {
   const navigate = useNavigate();
   const mapRef = useRef(null);
   const [mapInitialized, setMapInitialized] = useState(false);
+
+  const token = localStorage.getItem("token");
+  const uId = token ? jwtDecode(token).id : null;
 
   useEffect(() => {
     const map = mapRef.current;
@@ -52,7 +56,19 @@ const OSM = ({ locationCoordinates, landmarks, onMapChange }) => {
   }, [mapInitialized]);
 
   const handlePopupClick = (landmark) => {
-    navigate(`/homeinfor/${landmark._id}`, { state: { landmark } });
+    if (uId) {
+      navigate(`/infor/${landmark._id}`, {
+        state: {
+          landmark: landmark,
+        },
+      });
+    } else {
+      navigate(`/info/${landmark._id}`, {
+        state: {
+          landmark: landmark,
+        },
+      });
+    }
   };
 
   const getIconForType = (type) => {
@@ -185,6 +201,7 @@ const OSM = ({ locationCoordinates, landmarks, onMapChange }) => {
             ]}
             icon={customIcon}
             eventHandlers={{
+              click: () => handlePopupClick(landmark),
               mouseover: (e) => {
                 e.target.openPopup();
               },
@@ -194,10 +211,27 @@ const OSM = ({ locationCoordinates, landmarks, onMapChange }) => {
             }}
           >
             <Popup closeButton={false}>
-              <div onClick={() => handlePopupClick(landmark)}>
-                <h4>{type}</h4>
-                <p>{landmark.properties.artwork_type}</p>
-                <p>{landmark.properties.name}</p>
+              <div
+                onClick={() => handlePopupClick(landmark)}
+                style={{ cursor: "pointer", padding: "1px", minWidth: "100px" }}
+              >
+                <h3 style={{ marginBottom: "6px", color: "#2c3e50" }}>
+                  {landmark.properties.name || "Unnamed Landmark"}
+                </h3>
+                <p style={{ margin: "2px 0", fontWeight: "600" }}>
+                  Type:{" "}
+                  <span style={{ fontWeight: "normal" }}>
+                    {type.charAt(0).toUpperCase() + type.slice(1)}
+                  </span>
+                </p>
+                {landmark.properties.artwork_type && (
+                  <p style={{ margin: "2px 0", fontWeight: "600" }}>
+                    Artwork Type:{" "}
+                    <span style={{ fontWeight: "normal" }}>
+                      {landmark.properties.artwork_type}
+                    </span>
+                  </p>
+                )}
               </div>
             </Popup>
           </Marker>
