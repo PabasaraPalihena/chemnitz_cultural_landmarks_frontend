@@ -33,7 +33,6 @@ function App() {
     const fetchUserDetails = async () => {
       try {
         const userDetails = await checkUser();
-        // console.log("userDetails :", userDetails.user);
 
         if (userDetails) {
           setIsLoggedIn(true);
