@@ -23,7 +23,6 @@ function Verifyemail() {
     Axios.put(`${API}/api/v1/user/verify/${id}`)
       .then((response) => {
         if (response) {
-          // console.log("Email verified successfully!");
           setOpenAlert(true);
 
           setTimeout(() => {
@@ -31,7 +30,6 @@ function Verifyemail() {
           }, 2000);
         } else {
           console.log("Invalid verification token");
-
           setOpenAlert(false);
         }
       })

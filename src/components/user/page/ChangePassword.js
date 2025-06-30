@@ -46,7 +46,6 @@ export default function ChangePassword() {
     setLoginError("");
 
     if (!isValidPassword(password)) {
-      console.log("Enter strong password");
       return;
     }
     Axios.put(`${API}/api/v1/user/restpassword/${email}`, { password })

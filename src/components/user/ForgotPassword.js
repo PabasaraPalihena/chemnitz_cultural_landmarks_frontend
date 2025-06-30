@@ -81,7 +81,7 @@ export default function ForgotPassword({
     if (!isValidEmail(email)) {
       return;
     }
-    // console.log(email)
+
     Axios.post(`${API}/api/v1/user/forgotpassword`, { email })
       .then((response) => {
         if (response) {

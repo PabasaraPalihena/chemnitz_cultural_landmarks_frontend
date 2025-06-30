@@ -69,21 +69,16 @@ export default function Model({ setIsLoggedIn }) {
   };
 
   const handleClose = () => {
-    // console.log("Now in modeljs : close the main model")
     setOpen(false);
   };
 
   const handleLoginSuccess = () => {
-    // console.log("Logged In");
     setOpen(false);
     window.location.reload();
-    // setIsLoggedIn(true);
   };
 
   const handleRegSuccess = (useremail, id) => {
-    // console.log("Logged In : email & id",useremail,id);
     setOpen(false);
-    // setIsLoggedIn(true);
     setUserEmail(useremail);
     setUserId(id);
     navigate("/verifynotice", { state: { userEmail: useremail, userId: id } });

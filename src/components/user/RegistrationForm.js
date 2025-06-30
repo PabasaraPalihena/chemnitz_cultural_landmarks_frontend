@@ -56,23 +56,18 @@ export default function RegistrationForm({ onRegisterSuccess }) {
     setLoginError("");
 
     if (!isValidFirstName(firstName)) {
-      console.log("Enter correct Firstname");
       return;
     }
     if (!isValidLastName(lastName)) {
-      console.log("Enter correct Lastname");
       return;
     }
     if (!isValidEmail(email)) {
-      console.log("Invalid email");
       return;
     }
     if (!isValidPassword(password)) {
-      console.log("Enter strong password");
       return;
     }
     if (!isMatchingPassword(password, cpassword)) {
-      console.log("Password mismatch");
       return;
     }
 
@@ -84,19 +79,13 @@ export default function RegistrationForm({ onRegisterSuccess }) {
       password: password,
     };
 
-    // console.log(requestBody);
-
     Axios.post(`${API}/api/v1/user/register`, requestBody)
       .then((response) => {
-        // console.log(response.data)
         if (response) {
           localStorage.setItem("token", response.data.token);
-          // console.log(response.data.token);
 
           const useremail = response.data.user.email;
           const id = response.data.user.id;
-          // console.log(useremail);
-          // console.log(id)
           setOpenAlert(true);
 
           setFirstName("");
@@ -104,7 +93,7 @@ export default function RegistrationForm({ onRegisterSuccess }) {
           setEmail("");
           setPassword("");
           setLoginError("");
-          // console.log("User registered");
+
           if (typeof onRegisterSuccess === "function") {
             onRegisterSuccess(useremail, id);
           }

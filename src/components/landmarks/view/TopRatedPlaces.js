@@ -13,7 +13,6 @@ export default function TopRatedPlaces() {
   const fetchTopRatedLandmarks = () => {
     Axios.get(`${API}/api/v1/review/toprated`)
       .then((res) => {
-        console.log("Response data:", res.data.data);
         setLandmarks(res.data.data);
         setLoading(false);
       })

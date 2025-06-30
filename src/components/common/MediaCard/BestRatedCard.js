@@ -3,24 +3,33 @@ import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import { jwtDecode } from "jwt-decode";
 import "./StyleCard.css";
 
 const API = process.env.REACT_APP_API;
 
 export default function BestRatedCard({ landmarkDetails }) {
   const navigate = useNavigate();
-  console.log("landmarkDetails:", landmarkDetails);
   const [averageRating, setAverageRating] = useState(landmarkDetails.avgRating);
   const [reviewCount, setReviewCount] = useState(landmarkDetails.reviewCount);
 
+  const token = localStorage.getItem("token");
+  const uId = token ? jwtDecode(token).id : null;
+
   const handleCardClick = () => {
-    navigate(`/info/${landmarkDetails._id}`, {
-      state: {
-        landmark: landmarkDetails,
-        favourite: false,
-        uId: "",
-      },
-    });
+    if (uId) {
+      navigate(`/infor/${landmarkDetails._id}`, {
+        state: {
+          landmark: landmarkDetails,
+        },
+      });
+    } else {
+      navigate(`/info/${landmarkDetails._id}`, {
+        state: {
+          landmark: landmarkDetails,
+        },
+      });
+    }
   };
 
   const capitalizeFirstLetter = (str) => {

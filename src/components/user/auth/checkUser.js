@@ -8,7 +8,6 @@ const checkUser = async () => {
     const user = jwtDecode(token);
     if (user.id) {
       try {
-        // console.log(user.id)
         // Send a request to the backend to get the user's email address
         const response = await Axios.get(
           `${API}/api/v1/user/profile/${user.id}`,

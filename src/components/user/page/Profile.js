@@ -41,7 +41,6 @@ export default function Profile({ setUserInfo, setIsLoggedIn }) {
     setLoginError("");
 
     if (!isValidFirstName(firstName)) {
-      console.log("Enter correct Firstname");
       return;
     }
 
@@ -56,7 +55,6 @@ export default function Profile({ setUserInfo, setIsLoggedIn }) {
             firstName: response.data.user.firstName,
           }));
           setFirstName(response.data.user.firstName);
-          // console.log(userDetails)
 
           setOpenAlert(true);
         } else {
@@ -82,7 +80,6 @@ export default function Profile({ setUserInfo, setIsLoggedIn }) {
     setLoginError("");
 
     if (!isValidLastName(lastName)) {
-      console.log("Enter correct Lasttname");
       return;
     }
 

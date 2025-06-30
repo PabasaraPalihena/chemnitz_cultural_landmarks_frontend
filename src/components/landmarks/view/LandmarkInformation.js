@@ -88,7 +88,6 @@ export default function LandmarkInformation() {
       Axios.get(`${API}/api/v1/review/${landmarkId}`)
         .then((res) => {
           setReviews(res.data.data);
-          console.log(res.data.data);
         })
         .catch((err) => console.error(err));
     }

@@ -67,15 +67,12 @@ export default function ChangePasswordModal({ userId }) {
     setLoginError("");
 
     if (!isValidPassword(password)) {
-      console.log("Enter a strong password");
       return;
     }
     if (!isMatchingPassword(currentpassword)) {
-      console.log("Invalid password");
       return;
     }
 
-    // console.log(userId)
     Axios.put(`${API}/api/v1/user/changepassword`, {
       userId,
       currentpassword,
@@ -94,7 +91,6 @@ export default function ChangePasswordModal({ userId }) {
       })
       .catch((error) => {
         console.error(error.response.data.msg);
-        // console.log(error.response.data.msg)
         if (error.response.data.msg === "Mismatch the password") {
           setLoginError("Old Password is incorrect.");
           setOpenAlert(false);

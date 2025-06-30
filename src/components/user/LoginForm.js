@@ -51,7 +51,6 @@ export default function LoginForm({ onLoginSuccess, closeMainDialog }) {
       password: password,
     };
 
-    // console.log(requestBody)
     Axios.post(`${API}/api/v1/user/login`, requestBody)
       .then((response) => {
         if (response && response.data && response.data.token) {
@@ -61,7 +60,6 @@ export default function LoginForm({ onLoginSuccess, closeMainDialog }) {
           setEmail("");
           setPassword("");
           setLoginError("");
-          // console.log("succesfully login");
           if (typeof onLoginSuccess === "function") {
             onLoginSuccess();
           }
@@ -77,10 +75,6 @@ export default function LoginForm({ onLoginSuccess, closeMainDialog }) {
   };
 
   const handleOpenForgotPassword = () => {
-    // if (typeof closeMainDialog === "function") {
-    //   closeMainDialog();
-    //   console.log("closeMainDialog called");
-    // }
     setOpenForgotPassword(true);
   };
 

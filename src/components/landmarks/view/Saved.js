@@ -26,7 +26,6 @@ export default function Saved() {
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error);
         setError("No favorite landmarks found");
         setLoading(false);
       });
