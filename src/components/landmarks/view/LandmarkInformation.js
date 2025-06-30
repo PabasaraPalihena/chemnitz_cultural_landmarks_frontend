@@ -39,6 +39,8 @@ export default function LandmarkInformation() {
   const [reviews, setReviews] = useState([]);
   const [currentReviewPage, setCurrentReviewPage] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [averageRating, setAverageRating] = useState(null);
+  const [reviewCount, setReviewCount] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -54,6 +56,32 @@ export default function LandmarkInformation() {
         setLoading(false);
       });
   }, [landmarkId]);
+
+  useEffect(() => {
+    if (!landmarkDetails?._id) return;
+
+    Axios.get(`${API}/api/v1/review/${landmarkDetails._id}`)
+      .then((res) => {
+        const reviewsData = res.data.data || [];
+        setReviews(reviewsData);
+
+        if (reviewsData.length > 0) {
+          const avg =
+            reviewsData.reduce((acc, r) => acc + r.rating, 0) /
+            reviewsData.length;
+          setAverageRating(avg.toFixed(1));
+          setReviewCount(reviewsData.length);
+        } else {
+          setAverageRating(null);
+          setReviewCount(0);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching reviews:", err);
+        setAverageRating(null);
+        setReviewCount(0);
+      });
+  }, [landmarkDetails?._id]);
 
   useEffect(() => {
     if (landmarkId) {
@@ -139,21 +167,37 @@ export default function LandmarkInformation() {
           padding: "0 70px",
         }}
       >
-        <Typography variant="h5" fontWeight="bold">
-          {capitalizeFirstLetter(
-            landmarkDetails?.properties.amenity ||
-              landmarkDetails?.properties.tourism ||
-              "No name available"
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "15px",
+          }}
+        >
+          <Typography variant="h5" fontWeight="bold">
+            {capitalizeFirstLetter(
+              landmarkDetails?.properties.amenity ||
+                landmarkDetails?.properties.tourism ||
+                "No name available"
+            )}
+            {" : "}
+            {(
+              landmarkDetails?.properties.name ||
+              landmarkDetails?.properties.artwork_type ||
+              ""
+            )
+              .replace(/Chemnitz/gi, "")
+              .trim()}
+          </Typography>
+          {averageRating !== null && (
+            <Typography
+              gutterBottom
+              sx={{ fontSize: "16px", fontWeight: 600, color: "#ffb400" }}
+            >
+              ⭐ {averageRating} / 5 ({reviewCount})
+            </Typography>
           )}
-          {" : "}
-          {(
-            landmarkDetails?.properties.name ||
-            landmarkDetails?.properties.artwork_type ||
-            ""
-          )
-            .replace(/Chemnitz/gi, "")
-            .trim()}
-        </Typography>
+        </div>
 
         <IconButton
           aria-label="Share"
