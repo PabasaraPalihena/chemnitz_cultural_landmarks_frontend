@@ -354,42 +354,40 @@ export default function LandmarkInformation() {
         </div>
       </div>
 
-      <div className="main__box">
-        <h1 style={{ textAlign: "left" }}>User Reviews</h1>
-        <div className="review__box">
-          {reviews.length > 0 && (
-            <>
-              {reviews
-                .slice(
-                  (currentReviewPage - 1) * REVIEWS_PER_PAGE,
-                  currentReviewPage * REVIEWS_PER_PAGE
-                )
-                .map((review) => (
-                  <DefaultReviewCard
-                    key={review._id}
-                    review={review}
-                    landmark={landmarkDetails}
-                  />
-                ))}
-            </>
-          )}
+      {reviews.length > 0 && (
+        <div className="main__box">
+          <h1 style={{ textAlign: "left" }}>User Reviews</h1>
+          <div className="review__box">
+            {reviews
+              .slice(
+                (currentReviewPage - 1) * REVIEWS_PER_PAGE,
+                currentReviewPage * REVIEWS_PER_PAGE
+              )
+              .map((review) => (
+                <DefaultReviewCard
+                  key={review._id}
+                  review={review}
+                  landmark={landmarkDetails}
+                />
+              ))}
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "20px",
+            }}
+          >
+            <Pagination
+              count={Math.ceil(reviews.length / REVIEWS_PER_PAGE)}
+              page={currentReviewPage}
+              onChange={(_, page) => setCurrentReviewPage(page)}
+              variant="outlined"
+              size="medium"
+            />
+          </div>
         </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginTop: "20px",
-          }}
-        >
-          <Pagination
-            count={Math.ceil(reviews.length / REVIEWS_PER_PAGE)}
-            page={currentReviewPage}
-            onChange={(_, page) => setCurrentReviewPage(page)}
-            variant="outlined"
-            size="medium"
-          />
-        </div>
-      </div>
+      )}
 
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
