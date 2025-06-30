@@ -211,9 +211,9 @@ export default function SearchResults({
         <div className="SR_Place_component">
           {Array.from(new Array(ITEMS_PER_PAGE)).map((_, index) => (
             <div key={index} className="SR_Card_wrapper">
-              <Skeleton variant="rectangular" width={330} height={230} />
-              <Skeleton variant="text" width={200} height={20} />
-              <Skeleton variant="text" width={150} height={20} />
+              <Skeleton variant="rectangular" width={340} height={120} />
+              <Skeleton variant="text" width={340} height={20} />
+              <Skeleton variant="text" width={340} height={20} />
             </div>
           ))}
         </div>
