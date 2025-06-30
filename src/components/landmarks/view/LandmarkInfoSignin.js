@@ -10,7 +10,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Skeleton from "@mui/material/Skeleton";
 import MuiAlert from "@mui/material/Alert";
 import Pagination from "@mui/material/Pagination";
-import { Snackbar, TextField, Button, Rating } from "@mui/material";
+import { Snackbar } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -24,9 +24,11 @@ import WallpaperIcon from "@mui/icons-material/Wallpaper";
 import "./Info.css";
 import NearByCard from "../../common/MediaCard/NearByCard";
 import ReviewSection from "./ReviewSection";
+import DefaultReviewCard from "../../common/MediaCard/DefaultReviewCard";
 
 const API = process.env.REACT_APP_API;
 const NEARBYITEMS_PER_PAGE = 6;
+const REVIEWS_PER_PAGE = 5;
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -43,6 +45,8 @@ export default function LandmarkInfoSignin() {
   const [isLandmarkFavorite, setIsLandmarkFavorite] = useState(false);
   const [reviewText, setReviewText] = useState("");
   const [reviewRating, setReviewRating] = useState(0);
+  const [reviews, setReviews] = useState([]);
+  const [currentReviewPage, setCurrentReviewPage] = useState(1);
 
   const token = localStorage.getItem("token");
   const uId = token ? jwtDecode(token).id : null;
@@ -90,6 +94,17 @@ export default function LandmarkInfoSignin() {
       setIsLandmarkFavorite(savedLandmarks.includes(landmarkDetails._id));
     }
   }, [landmarkDetails, savedLandmarks]);
+
+  useEffect(() => {
+    if (landmarkId) {
+      Axios.get(`${API}/api/v1/review/${landmarkId}`)
+        .then((res) => {
+          setReviews(res.data.data);
+          console.log(res.data.data);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [landmarkId]);
 
   const fetchNearbyProperties = async (latitude, longitude, landmarkId) => {
     try {
@@ -368,7 +383,7 @@ export default function LandmarkInfoSignin() {
                 />
               ))
             ) : nearbyPropertiesForCurrentPage.length === 0 ? (
-              <h4>No Nearby properties found for sale in the specified area</h4>
+              <h4>No Nearby places found in the specified area</h4>
             ) : (
               nearbyPropertiesForCurrentPage.map((landmark) => (
                 <NearByCard
@@ -394,6 +409,43 @@ export default function LandmarkInfoSignin() {
         </div>
       </div>
 
+      <div className="main__box">
+        <h1 style={{ textAlign: "left" }}>User Reviews</h1>
+        <div className="review__box">
+          {reviews.length > 0 && (
+            <>
+              {reviews
+                .slice(
+                  (currentReviewPage - 1) * REVIEWS_PER_PAGE,
+                  currentReviewPage * REVIEWS_PER_PAGE
+                )
+                .map((review) => (
+                  <DefaultReviewCard
+                    key={review._id}
+                    review={review}
+                    landmark={landmarkDetails}
+                  />
+                ))}
+            </>
+          )}
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            marginTop: "20px",
+          }}
+        >
+          <Pagination
+            count={Math.ceil(reviews.length / REVIEWS_PER_PAGE)}
+            page={currentReviewPage}
+            onChange={(_, page) => setCurrentReviewPage(page)}
+            variant="outlined"
+            size="medium"
+          />
+        </div>
+      </div>
+
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={openAlert}
@@ -401,7 +453,7 @@ export default function LandmarkInfoSignin() {
         onClose={handleAlertClose}
       >
         <Alert severity="success" sx={{ width: "100%" }}>
-          Successfully sent the message!
+          Successful!
         </Alert>
       </Snackbar>
     </>

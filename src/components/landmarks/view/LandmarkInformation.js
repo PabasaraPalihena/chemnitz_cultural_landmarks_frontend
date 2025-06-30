@@ -20,9 +20,11 @@ import BrushIcon from "@mui/icons-material/Brush";
 import WallpaperIcon from "@mui/icons-material/Wallpaper";
 import "./Info.css";
 import NearByCard from "../../common/MediaCard/NearByCard";
+import DefaultReviewCard from "../../common/MediaCard/DefaultReviewCard";
 
 const API = process.env.REACT_APP_API;
 const NEARBYITEMS_PER_PAGE = 5;
+const REVIEWS_PER_PAGE = 5;
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -34,7 +36,8 @@ export default function LandmarkInformation() {
   const [openAlert, setOpenAlert] = useState(false);
   const [nearbyProperties, setNearbyProperties] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [reviews, setReviews] = useState([]);
+  const [currentReviewPage, setCurrentReviewPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -50,6 +53,17 @@ export default function LandmarkInformation() {
         console.error(error);
         setLoading(false);
       });
+  }, [landmarkId]);
+
+  useEffect(() => {
+    if (landmarkId) {
+      Axios.get(`${API}/api/v1/review/${landmarkId}`)
+        .then((res) => {
+          setReviews(res.data.data);
+          console.log(res.data.data);
+        })
+        .catch((err) => console.error(err));
+    }
   }, [landmarkId]);
 
   const fetchNearbyProperties = async (latitude, longitude, landmarkId) => {
@@ -256,7 +270,7 @@ export default function LandmarkInformation() {
       </div>
 
       <div className="main__box">
-        <div className="nearby_home">
+        <div className="nearby_place">
           <Typography variant="body1" gutterBottom>
             <h1 style={{ textAlign: "left" }}>Nearby Places</h1>
           </Typography>
@@ -271,7 +285,7 @@ export default function LandmarkInformation() {
                 />
               ))
             ) : nearbyPropertiesForCurrentPage.length === 0 ? (
-              <h4>No Nearby properties found for sale in the specified area</h4>
+              <h4>No Nearby places found in the specified area</h4>
             ) : (
               nearbyPropertiesForCurrentPage.map((landmark) => (
                 <NearByCard
@@ -293,6 +307,43 @@ export default function LandmarkInformation() {
               />
             </div>
           )}
+        </div>
+      </div>
+
+      <div className="main__box">
+        <h1 style={{ textAlign: "left" }}>User Reviews</h1>
+        <div className="review__box">
+          {reviews.length > 0 && (
+            <>
+              {reviews
+                .slice(
+                  (currentReviewPage - 1) * REVIEWS_PER_PAGE,
+                  currentReviewPage * REVIEWS_PER_PAGE
+                )
+                .map((review) => (
+                  <DefaultReviewCard
+                    key={review._id}
+                    review={review}
+                    landmark={landmarkDetails}
+                  />
+                ))}
+            </>
+          )}
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            marginTop: "20px",
+          }}
+        >
+          <Pagination
+            count={Math.ceil(reviews.length / REVIEWS_PER_PAGE)}
+            page={currentReviewPage}
+            onChange={(_, page) => setCurrentReviewPage(page)}
+            variant="outlined"
+            size="medium"
+          />
         </div>
       </div>
 

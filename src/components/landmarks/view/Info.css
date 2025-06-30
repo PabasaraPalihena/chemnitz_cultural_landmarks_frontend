@@ -12,12 +12,18 @@
   padding: 0 70px;
   box-sizing: border-box;
 }
-
+.review__box {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
 .landmark_info {
   width: 100%;
 }
 
-.nearby_home {
+.nearby_place {
   width: 100%;
 }
 
