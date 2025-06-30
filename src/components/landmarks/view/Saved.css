@@ -1,9 +1,9 @@
   .Place_component {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: left;
     margin: auto;
-    padding: 20px;
+    padding: 50px;
   }
   
   .Card_wrapper {
