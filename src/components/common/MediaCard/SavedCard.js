@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Axios from "axios";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -14,6 +14,30 @@ const API = process.env.REACT_APP_API;
 export default function SavedCard({ landmarks, refreshPage, uId }) {
   const navigate = useNavigate();
   const [isLandmarkFavorite, setIsLandmarkFavorite] = useState(true);
+  const [averageRating, setAverageRating] = useState(null);
+  const [reviewCount, setReviewCount] = useState(0);
+
+  useEffect(() => {
+    // Fetch reviews for this landmark to calculate average rating
+    Axios.get(`${API}/api/v1/review/${landmarks._id}`)
+      .then((res) => {
+        const reviews = res.data.data;
+        if (Array.isArray(reviews) && reviews.length > 0) {
+          const avg =
+            reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length;
+          setAverageRating(avg.toFixed(1));
+          setReviewCount(reviews.length);
+        } else {
+          setAverageRating(null);
+          setReviewCount(0);
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching reviews:", err);
+        setAverageRating(null);
+        setReviewCount(0);
+      });
+  }, [landmarks._id]);
 
   const handleCardClick = () => {
     navigate(`/infor/${landmarks._id}`, {
@@ -93,19 +117,34 @@ export default function SavedCard({ landmarks, refreshPage, uId }) {
             )}
           </Typography>
         </div>
-        <Typography
-          gutterBottom
-          sx={{ fontSize: "17px", fontWeight: 550, color: "#555" }}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "15px",
+          }}
         >
-          {" "}
-          {(
-            landmarks?.properties.name ||
-            landmarks?.properties.artwork_type ||
-            ""
-          )
-            .replace(/Chemnitz/gi, "")
-            .trim()}
-        </Typography>
+          <Typography
+            gutterBottom
+            sx={{ fontSize: "17px", fontWeight: 550, color: "#555" }}
+          >
+            {(
+              landmarks?.properties.name ||
+              landmarks?.properties.artwork_type ||
+              ""
+            )
+              .replace(/Chemnitz/gi, "")
+              .trim()}
+          </Typography>
+          {averageRating !== null && (
+            <Typography
+              gutterBottom
+              sx={{ fontSize: "16px", fontWeight: 600, color: "#ffb400" }}
+            >
+              ⭐ {averageRating} / 5 ({reviewCount})
+            </Typography>
+          )}
+        </div>
         <Typography
           style={{
             fontSize: "15px",
