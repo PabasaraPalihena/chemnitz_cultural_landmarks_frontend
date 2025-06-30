@@ -168,6 +168,25 @@ export default function LandmarkInfoSignin() {
       });
       setReviewText("");
       setReviewRating(0);
+
+      // Refetch reviews after successful submission
+      const res = await Axios.get(
+        `${API}/api/v1/review/${landmarkDetails._id}`
+      );
+      const reviewsData = res.data.data || [];
+      setReviews(reviewsData);
+
+      // Update average rating and review count
+      if (reviewsData.length > 0) {
+        const avg =
+          reviewsData.reduce((acc, r) => acc + r.rating, 0) /
+          reviewsData.length;
+        setAverageRating(avg.toFixed(1));
+        setReviewCount(reviewsData.length);
+      } else {
+        setAverageRating(null);
+        setReviewCount(0);
+      }
     } catch (error) {
       console.error("Review submit error:", error);
     }
