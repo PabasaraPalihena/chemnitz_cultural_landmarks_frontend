@@ -55,7 +55,9 @@ export default function Saved() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                justifyContent: "center",
                 height: "60vh",
+                width: "100%",
               }}
             >
               <h1>Bookmark your favorite landmarks in Chemnitz</h1>
