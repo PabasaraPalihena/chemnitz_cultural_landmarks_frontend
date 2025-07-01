@@ -10,6 +10,7 @@ import { useLocation } from "react-router-dom";
 import MuiAlert from "@mui/material/Alert";
 import Axios from "axios";
 import ChangePasswordModal from "./ChangePasswordModal";
+import DeleteModal from "./DeleteModal";
 import "./ProfileForm.css";
 
 const API = process.env.REACT_APP_API;
@@ -232,6 +233,25 @@ export default function Profile({ setUserInfo, setIsLoggedIn }) {
           >
             <h4>Password: Set a unique password</h4>
             <ChangePasswordModal userId={userDetails._id} />
+          </div>
+        </FormControl>
+        <h1>Manage Account</h1>
+        <FormControl
+          className="formControl"
+          style={{ marginBottom: "10px", marginLeft: "15px" }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <h4>Delete: Permenatly delete the account with all infromation</h4>
+            <DeleteModal
+              userId={userDetails._id}
+              setIsLoggedIn={setIsLoggedIn}
+            />
           </div>
         </FormControl>
       </div>
