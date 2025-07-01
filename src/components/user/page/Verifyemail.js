@@ -24,8 +24,9 @@ function Verifyemail() {
       .then((response) => {
         if (response) {
           setOpenAlert(true);
-
+          console.log("run1");
           setTimeout(() => {
+            console.log("run2");
             navigate("/");
           }, 2000);
         } else {
