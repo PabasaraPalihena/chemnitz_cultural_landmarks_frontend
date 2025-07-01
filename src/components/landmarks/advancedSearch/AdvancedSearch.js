@@ -86,7 +86,7 @@ export default function AdvancedSearch({ searchedValue }) {
       );
       setSuggestions(response.data);
     } catch (error) {
-      console.error("Error fetching suggestions:", error);
+      console.warn("Warn about fetching suggestions");
       setSuggestions([]);
     }
   };
