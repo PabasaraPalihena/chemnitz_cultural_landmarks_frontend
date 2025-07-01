@@ -17,19 +17,6 @@
   filter: brightness(0) invert(1); /* makes the icon white */
 }
 
-.hotel-icon .icon-wrapper {
-  background-color: #FF69B4;
-  border-radius: 50%;
-  padding: 3px;
-  width: 12px;
-  height: 12px;
-  border: 2px solid white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
-}
-
 .museum-icon .icon-wrapper {
   background-color: #206fe3;
   border-radius: 50%;

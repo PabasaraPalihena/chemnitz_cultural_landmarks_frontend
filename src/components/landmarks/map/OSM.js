@@ -13,7 +13,6 @@ import { jwtDecode } from "jwt-decode";
 import "./OSM.css";
 
 import resturantIcon from "../../images/spoon-and-fork.png";
-import hotelIcon from "../../images/sleeping.png";
 import museumIcon from "../../images/museum.png";
 import artworkIcon from "../../images/sculpture.png";
 import galleryIcon from "../../images/painting.png";
@@ -86,9 +85,9 @@ const OSM = ({ locationCoordinates, landmarks, onMapChange }) => {
       case "hotel":
       case "guest_house":
         return L.divIcon({
-          className: "custom-icon hotel-icon",
+          className: "custom-icon restaurant-icon",
           html: `<div class="icon-wrapper">
-             <img src="${hotelIcon}"/>
+             <img src="${resturantIcon}"/>
            </div>`,
           iconSize: [15, 15],
           iconAnchor: [8, 15],

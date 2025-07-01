@@ -37,7 +37,6 @@ const placetype = [
   { label: "Museum", value: "museum" },
   { label: "Theatre", value: "theatre" },
   { label: "Artwork", value: "artwork" },
-  { label: "Hotel", value: "hotel,guest_house" },
   { label: "Gallery", value: "gallery" },
 ];
 
