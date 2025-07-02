@@ -6,7 +6,6 @@
   padding: 0 70px;
   box-sizing: border-box;
 }
-
 .map_box {
   width: 100%;
   padding: 0 70px;
@@ -43,7 +42,7 @@
 @media (max-width: 960px) {
   .main__box,
   .map_box {
-    padding: 0 30px;
+    padding: 0 70px;
   }
 
   .landmark_cards_container {
@@ -54,6 +53,6 @@
 @media (max-width: 600px) {
   .main__box,
   .map_box {
-    padding: 0 20px;
+    padding: 0 70px;
   }
 }

@@ -156,7 +156,19 @@ export default function MyReviews() {
             height: "60vh",
           }}
         >
-          <h1>{error}</h1>
+          <h1>You haven't added any reviews yet.</h1>
+          <p>Start sharing your experiences with landmarks you’ve visited!</p>
+
+          <img
+            src="https://www.cheapestessay.com/_next/image?url=%2Freview%2Freview-ani.gif&w=1920&q=75"
+            alt="Review"
+            style={{
+              width: "400px",
+              height: "auto",
+              borderRadius: "8px",
+              marginTop: "10px",
+            }}
+          />
         </div>
       ) : (
         <div className="Place_component">
