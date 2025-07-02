@@ -120,87 +120,171 @@ export default function AdvancedSearch({ searchedValue }) {
 
   return (
     <div>
-      <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
-        <Search>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Chemnitz, Germany"
-            inputProps={{ "aria-label": "search" }}
-            value={value}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            onFocus={handleFocus}
-            endAdornment={
-              value && (
-                <ClearButton onClick={handleClearSearch} size="small">
-                  <ClearIcon />
-                </ClearButton>
-              )
-            }
-          />
-          {/* {isInputFocused && suggestions.length > 0 && ( */}
-          {isInputFocused && suggestions.length > 0 && (
-            <SuggestionsList>
-              {suggestions.map((suggestion) => (
-                <SuggestionItem
-                  key={suggestion.place_id}
-                  onClick={() => handleSelectSuggestion(suggestion)}
-                >
-                  {suggestion.display_name}
-                </SuggestionItem>
-              ))}
-            </SuggestionsList>
-          )}
-        </Search>
-
-        <>
-          <FormControl sx={{ m: 1, width: 180 }} size="small">
-            <Select
-              labelId="demo-multiple-checkbox-label"
-              id="demo-multiple-checkbox"
-              multiple
-              displayEmpty
-              value={placeType}
-              onChange={handleChange_placeType}
-              input={
-                <OutlinedInput
-                  sx={{
-                    fontSize: "14.7px",
-                    color: "#0081E7",
-                    "& .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#57ACED",
-                    },
-                    "&:hover .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#0081E7",
-                    },
-                  }}
-                />
+      {windowWidth > 800 ? (
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Chemnitz, Germany"
+              inputProps={{ "aria-label": "search" }}
+              value={value}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+              onFocus={handleFocus}
+              endAdornment={
+                value && (
+                  <ClearButton onClick={handleClearSearch} size="small">
+                    <ClearIcon />
+                  </ClearButton>
+                )
               }
-              renderValue={(selected) => {
-                if (selected.length === 0) {
-                  return <>Place Category</>;
-                }
+            />
+            {/* {isInputFocused && suggestions.length > 0 && ( */}
+            {isInputFocused && suggestions.length > 0 && (
+              <SuggestionsList>
+                {suggestions.map((suggestion) => (
+                  <SuggestionItem
+                    key={suggestion.place_id}
+                    onClick={() => handleSelectSuggestion(suggestion)}
+                  >
+                    {suggestion.display_name}
+                  </SuggestionItem>
+                ))}
+              </SuggestionsList>
+            )}
+          </Search>
 
-                return selected.join(", ");
-              }}
-              MenuProps={MenuProps}
-              inputProps={{ "aria-label": "Without label" }}
-            >
-              <MenuItem disabled value="">
-                <em>Place Category</em>
-              </MenuItem>
-              {placetype.map((item) => (
-                <MenuItem key={item.value} value={item.value}>
-                  <Checkbox checked={placeType.includes(item.value)} />
-                  <ListItemText primary={item.label} />
+          <>
+            <FormControl sx={{ m: 1, width: 180 }} size="small">
+              <Select
+                labelId="demo-multiple-checkbox-label"
+                id="demo-multiple-checkbox"
+                multiple
+                displayEmpty
+                value={placeType}
+                onChange={handleChange_placeType}
+                input={
+                  <OutlinedInput
+                    sx={{
+                      fontSize: "14.7px",
+                      color: "#0081E7",
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#57ACED",
+                      },
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#0081E7",
+                      },
+                    }}
+                  />
+                }
+                renderValue={(selected) => {
+                  if (selected.length === 0) {
+                    return <>Place Category</>;
+                  }
+
+                  return selected.join(", ");
+                }}
+                MenuProps={MenuProps}
+                inputProps={{ "aria-label": "Without label" }}
+              >
+                <MenuItem disabled value="">
+                  <em>Place Category</em>
                 </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+                {placetype.map((item) => (
+                  <MenuItem key={item.value} value={item.value}>
+                    <Checkbox checked={placeType.includes(item.value)} />
+                    <ListItemText primary={item.label} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </>
+        </Stack>
+      ) : (
+        <>
+          <div style={{ marginBottom: "10px", width: "100%", display: "flex" }}>
+            <Search style={{ flexGrow: 1, marginRight: "15px" }}>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Chemnitz, Germany"
+                inputProps={{ "aria-label": "search" }}
+                value={value}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+                onFocus={handleFocus}
+                endAdornment={
+                  value && (
+                    <ClearButton onClick={handleClearSearch} size="small">
+                      <ClearIcon />
+                    </ClearButton>
+                  )
+                }
+              />
+              {isInputFocused && suggestions.length > 0 && (
+                <SuggestionsList>
+                  {suggestions.map((suggestion) => (
+                    <SuggestionItem
+                      key={suggestion.place_id}
+                      onClick={() => handleSelectSuggestion(suggestion)}
+                    >
+                      {suggestion.display_name}
+                    </SuggestionItem>
+                  ))}
+                </SuggestionsList>
+              )}
+            </Search>
+          </div>
+          <>
+            <FormControl sx={{ m: 1, width: 180 }} size="small">
+              <Select
+                labelId="demo-multiple-checkbox-label"
+                id="demo-multiple-checkbox"
+                multiple
+                displayEmpty
+                value={placeType}
+                onChange={handleChange_placeType}
+                input={
+                  <OutlinedInput
+                    sx={{
+                      fontSize: "14.7px",
+                      color: "#0081E7",
+                      "& .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#57ACED",
+                      },
+                      "&:hover .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "#0081E7",
+                      },
+                    }}
+                  />
+                }
+                renderValue={(selected) => {
+                  if (selected.length === 0) {
+                    return <>Place Category</>;
+                  }
+
+                  return selected.join(", ");
+                }}
+                MenuProps={MenuProps}
+                inputProps={{ "aria-label": "Without label" }}
+              >
+                <MenuItem disabled value="">
+                  <em>Place Category</em>
+                </MenuItem>
+                {placetype.map((item) => (
+                  <MenuItem key={item.value} value={item.value}>
+                    <Checkbox checked={placeType.includes(item.value)} />
+                    <ListItemText primary={item.label} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </>
         </>
-      </Stack>
+      )}
     </div>
   );
 }
