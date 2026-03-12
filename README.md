@@ -128,7 +128,6 @@ The system includes several security and infrastructure features:
   
 ---
 
-## Author
+## Author - Pabasara Palihena
 
 Project developed as part of a university assignment.
-Author: Pabasara Palihena
