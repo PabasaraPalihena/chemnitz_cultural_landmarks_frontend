@@ -132,7 +132,3 @@ The system includes several security and infrastructure features:
 
 Project developed as part of a university assignment.
 Author: Pabasara Palihena
-
-Author
-Project developed as part of a university assignment for exploring
-cultural landmarks in Chemnitz using the MERN stack.
