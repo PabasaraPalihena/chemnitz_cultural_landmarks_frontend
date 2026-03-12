@@ -1,70 +1,138 @@
-# Getting Started with Create React App
+# Explore Chemnitz – Cultural Landmarks Web Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A **MERN-stack web application** for exploring cultural landmarks in Chemnitz.  
+The platform allows users to view landmarks on an interactive map, search and filter locations, and leave reviews.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Technologies Used
 
-### `npm start`
+### Frontend
+- React.js
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Backend
+- Node.js
+- Express.js
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Database
+- MongoDB Atlas
+- MongoDB Compass (for database management)
 
-### `npm test`
+### Dataset
+- Chemnitz Cultural Landmark Dataset (provided in the assignment)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
+# Explore Chemnitz – Feature List
 
-### `npm run build`
+## 1. Interactive Cultural Map
+- Displays cultural landmarks in Chemnitz using **React Leaflet** and **OpenStreetMap**.
+- Landmarks are represented using **color-coded icons based on category**:
+  - 🔴 Restaurants
+  - 🟡 Artworks
+  - 🟣 Theaters
+  - 🔵 Museums
+  - 🟢 Galleries
+- Hovering over a marker shows a **popup with the landmark name and type**.
+- Clicking a marker opens the **detailed landmark information page**.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 2. Dynamic Landmark Discovery
+- Landmarks displayed in the list correspond to the **current visible map area**.
+- Results automatically update when the user:
+  - zooms the map
+  - pans to another location.
+- Ensures that users always see **location-relevant results**.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 3. Advanced Search and Filtering
+- Users can **filter landmarks by category/type**.
+- **Keyword search** allows searching by name or related terms.
+- Combines **map bounding box filtering** with search queries for more accurate results.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 4. User Authentication System
+The platform supports two types of users:
 
-### `npm run eject`
+### Guest Users
+- Browse landmarks
+- Explore the interactive map
+- View landmark information
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Authenticated Users
+- Save favorite landmarks
+- Submit reviews
+- Manage their profile
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 5. User Registration and Email Verification
+- Users register by providing:
+  - First name
+  - Last name
+  - Email
+  - Password
+- Form validation ensures correct input.
+- A **verification email** is sent after registration.
+- Accounts are **activated only after email verification**.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 6. Login and Password Reset
+- Registered users can log in using **email and password**.
+- A **Forgot Password** feature allows users to request a reset link via email.
+- Users can securely **set a new password** through the reset page.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 7. Favorite Places (Saved Places)
+- Authenticated users can **save landmarks as favorites**.
+- A **heart icon** allows users to add or remove places from favorites.
+- A **Saved tab** displays all favorited landmarks.
 
-## Learn More
+## 8. Landmark Detail Page
+Each landmark includes a **dedicated detail page** displaying:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Name
+- Type
+- Address
+- Average rating
+- Phone number
+- Opening hours
+- Embedded map with the exact location
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Additional actions for logged-in users:
+- Add or remove favorites
+- Share the place link
+- Submit reviews
 
-### Code Splitting
+## 9. Review and Rating System
+Authenticated users can:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Submit **ratings and comments**
+- View existing reviews
+- Edit their own reviews
+- Delete their reviews
 
-### Analyzing the Bundle Size
+## 10. Nearby Places Recommendation
+- Displays landmarks located **within a 500-meter radius** of the selected place.
+- Helps users discover **nearby cultural attractions**.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 11. User Profile and Account Management
+Users can manage their account through the profile menu:
 
-### Making a Progressive Web App
+- Update personal information
+- Change password
+- View all submitted reviews
+- Edit or delete reviews
+- Logout securely
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 12. Security and Backend Features
+The system includes several security and infrastructure features:
 
-### Advanced Configuration
+- **JWT authentication** for secure user sessions
+- **bcrypt password hashing**
+- **CORS support** for cross-origin communication
+- **Environment variable management using `.env`**
+- **Email services via Nodemailer**
+  
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Author
 
-### Deployment
+Project developed as part of a university assignment.
+Author: Pabasara Palihena
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Author
+Project developed as part of a university assignment for exploring
+cultural landmarks in Chemnitz using the MERN stack.
