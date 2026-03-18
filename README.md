@@ -125,7 +125,9 @@ The system includes several security and infrastructure features:
 - **CORS support** for cross-origin communication
 - **Environment variable management using `.env`**
 - **Email services via Nodemailer**
-  
+
+**Backend Repository:**  
+[chemnitz_cultural_landmarks_backend](https://github.com/PabasaraPalihena/chemnitz_cultural_landmarks_backend)
 ---
 
 ## Author - Pabasara Palihena
